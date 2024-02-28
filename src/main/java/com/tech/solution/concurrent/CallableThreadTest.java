@@ -15,7 +15,9 @@ public class CallableThreadTest {
     public static void main(String[] args){
 //        callalbeTest1();
 
-        callalbeTest2();
+//        callalbeTest2();
+
+        callalbeTest3();
     }
 
     /**
@@ -91,6 +93,41 @@ public class CallableThreadTest {
 
             executorService.shutdown();
         } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * invokeAny方法测试
+     * 效果：返回第一执行成功的数据
+     *
+     */
+    public static void callalbeTest3(){
+        ExecutorService executorService = Executors.newCachedThreadPool();
+        List<String> defaultValueList = Lists.newArrayList("A","Y","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P");
+        ArrayList<Callable<String>> callers = new ArrayList<>();
+        for(String str : defaultValueList){
+            callers.add(new Callable<String>() {
+                @Override
+                public String call() throws Exception {
+                    StringBuilder builder = new StringBuilder();
+                    builder.append(str);
+                    builder.append("-2024.02.26");
+                    // 此处 A ~ P 只会输出一部分
+                    System.out.println(builder.toString());
+                    //此处直接返回
+                    return builder.toString();
+                }
+            });
+        }
+        try {
+            String futuresResult = executorService.invokeAny(callers);
+            System.out.printf("futuresResult:%s", futuresResult);
+            executorService.shutdown();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
