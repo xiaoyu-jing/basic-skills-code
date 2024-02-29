@@ -1,4 +1,4 @@
-package com.tech.solution.concurrent;
+package com.tech.solution.concurrent.volatiletest;
 
 /**
  * @author jing1560

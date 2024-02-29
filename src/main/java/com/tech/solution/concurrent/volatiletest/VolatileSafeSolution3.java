@@ -1,35 +1,27 @@
-package com.tech.solution.concurrent;
+package com.tech.solution.concurrent.volatiletest;
 
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author jing1560
  * @data 2024/2/28
- * 针对 Volatile 多线程场景下不安全的情况的解决方法1 -- 使用 Lock
+ * 针对 Volatile 多线程场景下不安全的情况的解决方法1 -- 使用 AtomicInteger
  */
-public class VolatileSafeSolution2 {
+public class VolatileSafeSolution3 {
 
-    public int inc = 0;
-
-    Lock lock = new ReentrantLock();
+    public AtomicInteger inc = new AtomicInteger(0);
 
     public void increase(){
-        lock.lock();
-        try {
-            inc++;
-        } finally {
-            lock.unlock();
-        }
+        inc.getAndIncrement();
     }
 
     public static void main(String[] args){
-        final VolatileSafeSolution2 volatileSafeSolution2 = new VolatileSafeSolution2();
+        final VolatileSafeSolution3 volatileSafeSolution3 = new VolatileSafeSolution3();
         for(int i=0; i<10; i++){
             new Thread(){
                 public void run(){
                     for(int j=0; j<1000; j++){
-                        volatileSafeSolution2.increase();
+                        volatileSafeSolution3.increase();
                     }
                 }
             }.start();
@@ -49,7 +41,7 @@ public class VolatileSafeSolution2 {
         }*/
 
 //        System.out.println(Thread.activeCount());
-        System.out.println(volatileSafeSolution2.inc);
+        System.out.println(volatileSafeSolution3.inc);
 
     }
 
