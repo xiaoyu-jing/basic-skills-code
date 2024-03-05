@@ -10,14 +10,15 @@ import java.util.Optional;
  * 1、isPresent() 为true,表示存在，不为空；  为false，表示不存在，为空
  * 2、orElseGet() 中传入的是默认值，如果对象为空，则返回默认值；如果不为空，则返回自身值
  * 3、map()函数对当前Optional的值进行转化
+ * 4、orElse() 接受一个默认值，而不是一个函数
  */
 public class OptionalTestCase {
 
     public static void main(String[] args){
 
-//        testOptional1();
+        testOptional1();
 
-        testOptional2_Map();
+//        testOptional2_Map();
 
     }
 
@@ -42,6 +43,9 @@ public class OptionalTestCase {
 
         System.out.println("直接输出 opt1：" + opt1.orElseGet(() -> "is Null"));
         System.out.println("直接输出 opt2：" + opt2.orElseGet(() -> "is Null"));
+
+        System.out.println("opt1.orElse() 接收一个默认值而不是一个函数：" + opt1.orElse("恐龙抗狼"));
+        System.out.println("opt2.orElse() 接收一个默认值而不是一个函数：" + opt2.orElse("恐龙抗狼"));
     }
 
     /**
