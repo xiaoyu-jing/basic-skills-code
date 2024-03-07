@@ -1,6 +1,9 @@
 package com.tech.solution.java8;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author jing1560
@@ -11,7 +14,9 @@ public class IteratorTestCase {
 
     public static void main(String[] args){
 
-        testIterator();
+//        testIterator();
+
+        testMapIterator();
 
     }
 
@@ -31,6 +36,17 @@ public class IteratorTestCase {
      * 测试Map迭代器
      */
     private static void testMapIterator(){
-
+        Map<String,String> map = new HashMap<>();
+        map.put("1","Java");
+        map.put("2","Python");
+        map.put("3","Go");
+        map.put("4","C++");
+        Iterator<Map.Entry<String, String>> iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, String> entry = iterator.next();
+            String key = entry.getKey();
+            String value = entry.getValue();
+            System.out.println(key + ":" + value);
+        }
     }
 }
