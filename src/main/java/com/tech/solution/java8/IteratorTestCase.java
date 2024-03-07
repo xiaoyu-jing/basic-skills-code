@@ -15,7 +15,6 @@ public class IteratorTestCase {
 
     }
 
-
     /**
      * 测试遍历
      */
@@ -26,5 +25,12 @@ public class IteratorTestCase {
 
         //Java8 的函数编程写法
         Arrays.asList("a","b","c").forEach(System.out::println);
+    }
+
+    /**
+     * 测试Map迭代器
+     */
+    private static void testMapIterator(){
+
     }
 }
