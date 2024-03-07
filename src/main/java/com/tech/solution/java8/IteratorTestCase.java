@@ -1,9 +1,6 @@
 package com.tech.solution.java8;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author jing1560
@@ -16,7 +13,9 @@ public class IteratorTestCase {
 
 //        testIterator();
 
-        testMapIterator();
+//        testMapIterator();
+
+        testListIterator();
 
     }
 
@@ -54,6 +53,14 @@ public class IteratorTestCase {
      * 测试list迭代器
      */
     private static void testListIterator(){
-
+        List<String> list = Arrays.asList("Java","Python","Rube","Go");
+        Iterator<String> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            String item = iterator.next();
+            if("Python".equals(item)){
+                iterator.remove();
+            }
+        }
+        System.out.println(list);
     }
 }
