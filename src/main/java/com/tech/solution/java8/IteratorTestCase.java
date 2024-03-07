@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * @author jing1560
- * @data 2024/3/4
+ * @date 2024/3/4
  * @discription  迭代器测试
  */
 public class IteratorTestCase {
@@ -48,5 +48,12 @@ public class IteratorTestCase {
             String value = entry.getValue();
             System.out.println(key + ":" + value);
         }
+    }
+
+    /**
+     * 测试list迭代器
+     */
+    private static void testListIterator(){
+
     }
 }
