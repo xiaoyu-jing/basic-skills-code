@@ -14,7 +14,13 @@ public class CommonThreadPool {
     //Todo 线程的3种实现方式（Thread,Runnable,Callable）
     private static void threadTest(){
         for (int i = 0; i < 9; i++) {
-
+            int finalI = i;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName() + "_" + finalI);
+                }
+            }).start();
         }
 
     }
