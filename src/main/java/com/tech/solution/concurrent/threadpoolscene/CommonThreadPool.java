@@ -7,7 +7,14 @@ package com.tech.solution.concurrent.threadpoolscene;
  */
 public class CommonThreadPool {
 
+    public static void main(String[] args){
+
+    }
+
     //Todo 线程的3种实现方式（Thread,Runnable,Callable）
+    private static void threadTest(){
+
+    }
 
 
     //Todo JDK的4种默认线程池
