@@ -8,11 +8,14 @@ package com.tech.solution.concurrent.threadpoolscene;
 public class CommonThreadPool {
 
     public static void main(String[] args){
-
+        threadTest();
     }
 
     //Todo 线程的3种实现方式（Thread,Runnable,Callable）
     private static void threadTest(){
+        for (int i = 0; i < 9; i++) {
+
+        }
 
     }
 
