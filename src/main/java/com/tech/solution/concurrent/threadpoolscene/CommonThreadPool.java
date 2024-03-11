@@ -9,6 +9,8 @@ public class CommonThreadPool {
 
     public static void main(String[] args){
         threadTest();
+
+//        runnableTest();
     }
 
     //Todo 线程的3种实现方式（Thread,Runnable,Callable）
@@ -22,6 +24,9 @@ public class CommonThreadPool {
                 }
             }).start();
         }
+    }
+
+    private static void runnableTest(){
 
     }
 
