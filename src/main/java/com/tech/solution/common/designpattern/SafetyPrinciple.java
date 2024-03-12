@@ -3,37 +3,42 @@ package com.tech.solution.common.designpattern;
 /**
  * @author jing1560
  * @data 2024/3/12
- * @discription 里氏替换原则 - 经典案例：正方形不是长方形
- *                       下述代码为：违背里式替换原则 的示例
+ * @discription 正确使用 里式替换原则
  */
-public class ExtendTestCast {
+public class SafetyPrinciple {
+
+    //四边形接口
+    public interface QuadRangle {
+        long getWidth();
+        long getHeight();
+    }
 
     //长方形
-    public static class Rectangle {
-        //宽
+    public static class Rectangle implements QuadRangle{
         private long height;
-        //高
         private long width;
-
-        public long getHeight() {
-            return height;
-        }
 
         public void setHeight(long height) {
             this.height = height;
         }
 
+        public void setWidth(long width) {
+            this.width = width;
+        }
+
+        @Override
         public long getWidth() {
             return width;
         }
 
-        public void setWidth(long width) {
-            this.width = width;
+        @Override
+        public long getHeight() {
+            return height;
         }
     }
 
     //正方形
-    public static class Square extends Rectangle {
+    public static class Square implements QuadRangle{
         private long length;
 
         public long getLength() {
@@ -45,26 +50,16 @@ public class ExtendTestCast {
         }
 
         @Override
-        public long getHeight() {
-            return getLength();
-        }
-
-        @Override
-        public void setHeight(long height) {
-            setLength(height);
-        }
-
-        @Override
         public long getWidth() {
-            return getLength();
+            return length;
         }
-
         @Override
-        public void setWidth(long width) {
-            setLength(width);
+        public long getHeight() {
+            return length;
         }
     }
 
+    // 这里的 Rectangle参数就不能被改变了，如果传入QuadRangle则会报错，避免了继承泛滥问题
     public static void resize(Rectangle rectangle){
         while (rectangle.getWidth() >= rectangle.getHeight()) {
             rectangle.setHeight(rectangle.getHeight() + 1);
@@ -81,8 +76,8 @@ public class ExtendTestCast {
 
         Square square = new Square();
         square.setLength(10);
-        //死循环
-        resize(square);
+        //此处由于不是继承关系，所以这个方法也就不能正常调用了，这就保证了 里式替换原则
+        //resize(square);
     }
 
 }
