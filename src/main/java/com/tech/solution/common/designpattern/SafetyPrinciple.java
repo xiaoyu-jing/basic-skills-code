@@ -3,7 +3,7 @@ package com.tech.solution.common.designpattern;
 /**
  * @author jing1560
  * @data 2024/3/12
- * @discription 正确使用 里式替换原则
+ * @discription 正确使用 里式替换原则：子类可以扩展父类的功能，但不能改变父类原有的功能
  */
 public class SafetyPrinciple {
 
