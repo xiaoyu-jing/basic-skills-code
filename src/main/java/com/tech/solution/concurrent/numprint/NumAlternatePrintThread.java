@@ -20,7 +20,9 @@ public class NumAlternatePrintThread extends Thread{
     @Override
     public void run(){
         while (cnt < 100) {
+            // cnt % THREAD_NUM 取余
             if(cnt % THREAD_NUM == id){
+                //synchronized 保证原子性，volatile保证可见性，最终都是为了保证 cnt++ 操作的准确性
                 synchronized (NumAlternatePrintThread.class) {
                     cnt++;
                     System.out.println("thread_" + id + " cnt:" + cnt);
