@@ -17,6 +17,7 @@ public class MergeArrayList {
     }
 
     private static int[] mergeArrayList(int[] arr1, int[] arr2){
+        //i:用于表示 arr1 数组    j：用来表示 arr2 数组  k：用来表示结果数组
         int i = 0;
         int j = 0;
         int k = 0;
@@ -31,6 +32,9 @@ public class MergeArrayList {
                 }
             }
 
+            /**
+             * 后面两个while循环是用来保证两个数组比较完之后剩下的一个数组里的元素能顺利传入
+             */
             //剩余数组内容直接放入resultArr中
             while (i < arr1.length){
                 resultArr[k++] = arr1[i++];
@@ -52,6 +56,7 @@ public class MergeArrayList {
      * @return
      */
     private static boolean checkSort(int[] arr){
+        //这个标志位是一种 冒泡排序的优化方法
         boolean checkflag = true;
         for(int i = 0; i < arr.length - 1 && checkflag; i++){
             for(int j = i+1; j < arr.length; j++){
