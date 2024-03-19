@@ -45,6 +45,7 @@ public class InterviewCase1 {
             List<Integer> list = new ArrayList<>();
             list.add(1);
             parentList.add(list);
+            return parentList;
         }
 
         int[] defaultArr = new int[n];
