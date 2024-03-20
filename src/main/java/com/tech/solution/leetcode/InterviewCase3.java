@@ -39,7 +39,7 @@ public class InterviewCase3 {
     
     private static int maxMoney2(int[] prices){
 
-        int asInt = Arrays.stream(prices).max().getAsInt();
+        Arrays.stream(prices).max().getAsInt();
 
         return 0;
     }

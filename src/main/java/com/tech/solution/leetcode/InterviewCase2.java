@@ -28,7 +28,7 @@ public class InterviewCase2 {
     /**
      * 数据初始化
      * @param head
-     * @param pos     第几位是循环节点
+     * @param pos     第几位是循环节点（入环的位置）
      * @param count   计数位
      * @param nodeMap   node临时存放节点
      * @return
@@ -50,39 +50,73 @@ public class InterviewCase2 {
     }
 
     public static void main(String[] args){
+        /**
+         * 示例1   {3,2,0,-4}
+         */
         Map<Integer,ListNode> nodeMap = new HashMap<>();
         ListNode node = generatorData(new int[]{3,2,0,-4}, 1,0, nodeMap);
         //构造尾节点
         ListNode newNode = buildTailNode(node,1);
-        System.out.println("方法1 - 循环队列中是否存在环：" + checkCycle1(newNode));
+        System.out.println("【示例1】方法1 - 循环队列中是否存在环：" + checkCycle1(newNode));
         nodeMap.clear();
 
         ListNode node2 = generatorData(new int[]{3,2,0,-4}, 1,0, nodeMap);
-        System.out.println("方法2 - 循环队列中是否存在环：" + checkCycle2(node2));
+        //构造尾节点
+        ListNode newNode2 = buildTailNode(node2,1);
+        System.out.println("【示例1】方法2 - 循环队列中是否存在环：" + checkCycle2(newNode2));
+        nodeMap.clear();
+
+        /**
+         * 示例2  {1，2}
+         */
+        ListNode node3 = generatorData(new int[]{1,2}, 0,0, nodeMap);
+        //构造尾节点
+        ListNode newNode3 = buildTailNode(node3,0);
+        System.out.println("【示例2】方法2 - 循环队列中是否存在环：" + checkCycle2(newNode3));
+        nodeMap.clear();
+
+
+        /**
+         * 示例3  {1}
+         */
+        ListNode node4 = generatorData(new int[]{1}, -1,0, nodeMap);
+        //构造尾节点
+        ListNode newNode4 = buildTailNode(node4,-1);
+        System.out.println("【示例3】方法2 - 循环队列中是否存在环：" + checkCycle2(newNode4));
         nodeMap.clear();
     }
 
+    /**
+     * 构造尾节点
+     * @param node
+     * @param pos  第几位是循环节点（入环的位置）
+     * @return
+     */
     private static ListNode buildTailNode(ListNode node, int pos) {
         if(pos < 0){
             return node;
         }
-        Map<Integer,ListNode> map = new HashMap<>();
-        ListNode tempNode = node;
-        ListNode tailNode = null;
+        ListNode currentNode = node;
+        //特定节点的前一个节点
+        ListNode targetPrev = null;
+        //递增计数器
         int countNum = 0;
-        while (tempNode.next != null) {
+        while (currentNode != null) {
             if(countNum == pos){
-                tailNode = tempNode;
-            }
-            countNum++;
-            tempNode = tempNode.next;
-        }
-        while (true) {
-            if(node == null){
-                node = tailNode;
+                targetPrev = currentNode;
                 break;
             }
-            node = node.next;
+            countNum++;
+            currentNode = currentNode.next;
+        }
+
+        if(targetPrev != null){
+            //定义尾节点
+            ListNode tail = node;
+            while (tail.next != null) {
+                tail = tail.next;
+            }
+            tail.next = targetPrev;
         }
 
         return node;
@@ -97,7 +131,7 @@ public class InterviewCase2 {
         Map<ListNode,Integer> map = new HashMap<>();
         ListNode head = node;
         while (head.next != null) {
-            if(map.get(head.val) == null){
+            if(map.get(head) == null){
                 map.put(head,0);
             } else {
                 return true;
@@ -120,7 +154,7 @@ public class InterviewCase2 {
                 return false;
             }
             slow = slow.next;
-            fast = slow.next.next;
+            fast = fast.next.next;
         }
         return true;
     }
