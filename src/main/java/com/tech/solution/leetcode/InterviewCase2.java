@@ -25,65 +25,62 @@ public class InterviewCase2 {
         }
     }
 
-    /**
-     * 数据初始化
-     * @param head
-     * @param pos     第几位是循环节点（入环的位置）
-     * @param count   计数位
-     * @param nodeMap   node临时存放节点
-     * @return
-     */
-    private static ListNode generatorData(int[] head, int pos, int count,Map<Integer,ListNode> nodeMap){
-        if(count == head.length && pos == -1){
-            //无循环节点，末尾节点直接返回null
-            return null;
-        }
-        if(count == head.length && pos != -1){
-            return nodeMap.get(pos);
-        }
-        ListNode node = new ListNode(head[count]);
-
-        node.next = generatorData(head,pos,count + 1, nodeMap);
-        nodeMap.put(count,node);
-
-        return node;
-    }
-
     public static void main(String[] args){
         /**
          * 示例1   {3,2,0,-4}
          */
-        Map<Integer,ListNode> nodeMap = new HashMap<>();
-        ListNode node = generatorData(new int[]{3,2,0,-4}, 1,0, nodeMap);
-        //构造尾节点
-        ListNode newNode = buildTailNode(node,1);
-        System.out.println("【示例1】方法1 - 循环队列中是否存在环：" + checkCycle1(newNode));
-        nodeMap.clear();
+        //初始化循环链表
+        ListNode node = initLinkedList(new int[]{3,2,0,-4}, 1);
+        System.out.println("【示例1】方法1 - 循环队列中是否存在环：" + checkCycle1(node));
 
-        ListNode node2 = generatorData(new int[]{3,2,0,-4}, 1,0, nodeMap);
-        //构造尾节点
-        ListNode newNode2 = buildTailNode(node2,1);
-        System.out.println("【示例1】方法2 - 循环队列中是否存在环：" + checkCycle2(newNode2));
-        nodeMap.clear();
+        //初始化循环链表
+        ListNode node2 = initLinkedList(new int[]{3,2,0,-4}, 1);
+        System.out.println("【示例1】方法2 - 循环队列中是否存在环：" + checkCycle2(node2));
 
         /**
          * 示例2  {1，2}
          */
-        ListNode node3 = generatorData(new int[]{1,2}, 0,0, nodeMap);
-        //构造尾节点
-        ListNode newNode3 = buildTailNode(node3,0);
-        System.out.println("【示例2】方法2 - 循环队列中是否存在环：" + checkCycle2(newNode3));
-        nodeMap.clear();
-
+        //初始化循环链表
+        ListNode node3 = initLinkedList(new int[]{1,2}, 0);
+        System.out.println("【示例2】方法2 - 循环队列中是否存在环：" + checkCycle2(node3));
 
         /**
          * 示例3  {1}
          */
-        ListNode node4 = generatorData(new int[]{1}, -1,0, nodeMap);
-        //构造尾节点
-        ListNode newNode4 = buildTailNode(node4,-1);
-        System.out.println("【示例3】方法2 - 循环队列中是否存在环：" + checkCycle2(newNode4));
-        nodeMap.clear();
+        //初始化循环链表
+        ListNode node4 = initLinkedList(new int[]{1}, -1);
+        System.out.println("【示例3】方法2 - 循环队列中是否存在环：" + checkCycle2(node4));
+    }
+
+    /**
+     * 初始化循环链表： 1、构造普通链表
+     *               2、构造循环链表
+     * @param head
+     * @param pos
+     * @return
+     */
+    private static ListNode initLinkedList(int[] head, int pos){
+        //生成普通链表数据
+        ListNode commonNode = buildLinkedList(head, 0);
+        //构造尾节点，生成循环链表
+        ListNode cycleLinkedListNode = buildTailNode(commonNode,pos);
+        return cycleLinkedListNode;
+    }
+
+    /**
+     * 构造链表  head = [3,2,0,-4]
+     * @param head
+     * @param count   计数位
+     * @return
+     */
+    private static ListNode buildLinkedList(int[] head, int count){
+        if(count == head.length){
+            //末尾节点直接返回null
+            return null;
+        }
+        ListNode node = new ListNode(head[count]);
+        node.next = buildLinkedList(head,count + 1);
+        return node;
     }
 
     /**
@@ -94,13 +91,16 @@ public class InterviewCase2 {
      */
     private static ListNode buildTailNode(ListNode node, int pos) {
         if(pos < 0){
+            //pos < 0 表示没有环，直接返回
             return node;
         }
+        //此处 currentNode 只是一个对象的引用，指向的还是 原node对象的地址
         ListNode currentNode = node;
-        //特定节点的前一个节点
+        //特定节点的前一个节点（入环的目标节点）
         ListNode targetPrev = null;
         //递增计数器
         int countNum = 0;
+        // 遍历链表寻找目标值
         while (currentNode != null) {
             if(countNum == pos){
                 targetPrev = currentNode;
@@ -110,12 +110,15 @@ public class InterviewCase2 {
             currentNode = currentNode.next;
         }
 
+        // 如果找到了目标节点，则将尾节点指向它
         if(targetPrev != null){
-            //定义尾节点
+            //定义尾节点，tail引用指向 node节点，修改 tail 则表示修改 node
+            //此处 tail 只是一个对象的引用，指向的还是 原node对象的地址   （对象的引用测试，可参考 ObjectReferenceTest.java）
             ListNode tail = node;
             while (tail.next != null) {
                 tail = tail.next;
             }
+            //此处修改了 tail引用的尾指针，相当于修改了 node 的尾指针
             tail.next = targetPrev;
         }
 
