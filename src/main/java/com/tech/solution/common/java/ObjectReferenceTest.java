@@ -1,4 +1,4 @@
-package com.tech.solution.leetcode;
+package com.tech.solution.common.java;
 
 /**
  * @author jing1560
