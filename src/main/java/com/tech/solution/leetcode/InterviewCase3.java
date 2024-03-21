@@ -1,7 +1,5 @@
 package com.tech.solution.leetcode;
 
-import java.util.Arrays;
-
 /**
  * @author jing1560
  * @data 2024/3/20
@@ -19,10 +17,18 @@ public class InterviewCase3 {
      */
 
     public static void main(String[] args){
-        System.out.println("最大利润为：" + maxMoney(new int[]{3,6,5,9,7}));
+        System.out.println("方法1：最大利润为：" + maxProfit(new int[]{3,6,5,9,7}));
+
+        System.out.println("方法2【优化算法】：最大利润为：" + maxProfit2(new int[]{3,6,5,9,7}));
+
     }
 
-    private static int maxMoney(int[] prices){
+    /**
+     * 方法1：时间复杂度为 O(n^2)
+     * @param prices
+     * @return
+     */
+    private static int maxProfit(int[] prices){
         int maxMoney = 0;
         for(int i = 0; i < prices.length; i++){
             for(int j = i+1; j < prices.length; j++){
@@ -36,12 +42,30 @@ public class InterviewCase3 {
         }
         return maxMoney;
     }
-    
-    private static int maxMoney2(int[] prices){
 
-        Arrays.stream(prices).max().getAsInt();
+    /**
+     * 方法2 - 优化算法：
+     *       时间复杂度为 O(n)：其中 n 是数组 prices 的长度，因为只需要遍历一次数组
+     *       空间复杂度为 O(1)：因为只使用了常量级别的额外空间
+     * @param prices
+     * @return
+     */
+    private static int maxProfit2(int[] prices){
+        if(prices == null || prices.length == 0){
+            return 0;
+        }
+        // 初始化最低价格为第一天的价格
+        int minPrice = prices[0];
+        // 初始化最大利润为0
+        int maxProfit = 0;
+        for(int i = 1; i < prices.length; i++){
+            // 更新最低价格
+            minPrice = Math.min(minPrice,prices[i]);
 
-        return 0;
+            // 计算并更新最大利润
+            maxProfit = Math.max(maxProfit, prices[i] - minPrice);
+        }
+        return maxProfit;
     }
 
 }

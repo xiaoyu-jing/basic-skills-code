@@ -40,4 +40,13 @@ public class FindKthLargest {
             }
         }
     }
+
+    /*public static void bucketSort(){
+        int[] arr = {3,2,3,1,2,4,5,5,6};
+        int[] newArr = new int[arr.length];
+        for(int i = 0){
+
+        }
+        Arrays.stream(arr).min().getAsInt();
+    }*/
 }
