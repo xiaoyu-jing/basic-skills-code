@@ -22,6 +22,7 @@ public class BinarySortTestCase {
     }
 
     private static int binarySort(int[] arr, int key){
+        //该排序的时间复杂度为 O(n log(n))
         Arrays.sort(arr);
         int left = 0;
         int right = arr.length - 1;
