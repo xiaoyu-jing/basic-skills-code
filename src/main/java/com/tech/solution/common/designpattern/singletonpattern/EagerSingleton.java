@@ -9,6 +9,7 @@ public class EagerSingleton {
 
     private static final EagerSingleton instance = new EagerSingleton();
 
+    //饿汉式 的构造器要设置为 private，防止外部对象 直接创建 EagerSingleton
     private EagerSingleton(){}
 
     public static  EagerSingleton getInstance(){
