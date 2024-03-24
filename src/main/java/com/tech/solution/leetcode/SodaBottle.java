@@ -128,6 +128,12 @@ public class SodaBottle {
         }
     }
 
+    /**
+     * 2个瓶子 就在借一个 恰好喝一个 还一个
+     * 奇数就是 n/2 剩一个空瓶 偶数就是n/2
+     * @param param
+     * @return
+     */
     private static int computeMaxCount(int param){
         //如果是1个空汽水瓶，可换0瓶汽水
         if(param == 1)
