@@ -7,6 +7,7 @@ import java.util.Scanner;
  * @data 2024/3/23
  *
  * 华为机试 - 【汽水瓶】 2023真题
+ * https://blog.csdn.net/qq_41810415/article/details/130376950
  *
  * 题目：
  * 某商店规定：三个空汽水瓶可以换一瓶汽水，允许向老板借空汽水瓶（但是必须要归还）。
