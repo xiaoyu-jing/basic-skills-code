@@ -1,5 +1,7 @@
 package com.tech.solution.leetcode;
 
+import java.util.Scanner;
+
 /**
  * @author jing1560
  * @data 2024/3/23
@@ -36,13 +38,17 @@ package com.tech.solution.leetcode;
 public class SodaBottle {
 
     public static void main(String[] args){
-        maxCountSolution2(10);
+        /*maxCountSolution2(10);
         maxCountSolution2(3);
         maxCountSolution2(81);
-        maxCountSolution2(0);
+        maxCountSolution2(0);*/
+
+        // 解法3：通过外部输入的方式（Scanner）进行计算 (需要在控制台手动输入)
+        maxCountSolution3();
     }
 
     /**
+     * 解法1：
      * 能喝到最多汽水的瓶数
      * @param emptySodaBottle   空汽水瓶数量
      * @return
@@ -76,6 +82,7 @@ public class SodaBottle {
 
 
     /**
+     * 解法2：
      * 能喝到最多汽水的瓶数
      * @param emptySodaBottle   空汽水瓶数量
      * @return
@@ -102,6 +109,34 @@ public class SodaBottle {
         }
         System.out.println(emptySodaBottle + " 个空瓶，最多可喝到 " + maxCount + " 瓶汽水");
         return maxCount;
+    }
+
+    /**
+     * 解法3：
+     * 通过外部输入的方式（Scanner）进行计算
+     * @return
+     */
+    private static void maxCountSolution3(){
+        Scanner in = new Scanner(System.in);
+        //注意 hasNext 和 hasNextLine 的区别
+        while (in.hasNextInt()) { //注意 while 处理多个 Case
+            int param = in.nextInt();
+            if(param == 0)
+                // 输入值为0，则退出
+                break;
+            System.out.println(computeMaxCount(param));
+        }
+    }
+
+    private static int computeMaxCount(int param){
+        //如果是1个空汽水瓶，可换0瓶汽水
+        if(param == 1)
+            return 0;
+        //如果有2个空汽水瓶，老板可以借1个空汽水瓶，就能兑换1瓶汽水
+        if(param == 2)
+            return 1;
+        //其他场景，只要大于 2个空汽水瓶，就可以参与兑换
+        return param / 2;
     }
 
 }
