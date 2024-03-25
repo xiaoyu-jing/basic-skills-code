@@ -156,7 +156,10 @@ public class InterviewCase2 {
             if(fast == null || fast.next == null){
                 return false;
             }
+            //此处为重点！ （如果都各走一步，那永远都追不上）
+            // 慢指针每次走一步
             slow = slow.next;
+            // 快指针每次走两步
             fast = fast.next.next;
         }
         return true;
