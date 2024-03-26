@@ -107,6 +107,7 @@ public class InterviewCase2 {
                 break;
             }
             countNum++;
+            //此处的赋值，只是移动了 currentNode 指针，而没有改变它原来指向的节点的数据，所以 原node 是不会发生变化的
             currentNode = currentNode.next;
         }
 
@@ -118,7 +119,7 @@ public class InterviewCase2 {
             while (tail.next != null) {
                 tail = tail.next;
             }
-            //此处修改了 tail引用的尾指针，相当于修改了 node 的尾指针
+            //此处修改了 tail引用的尾指针（且修改了尾指针原来的节点数据，原来是 null，改成具体值了），相当于修改了 node 的尾指针
             tail.next = targetPrev;
         }
 
