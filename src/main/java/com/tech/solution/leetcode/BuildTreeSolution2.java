@@ -6,6 +6,8 @@ import java.util.Map;
 /**
  * @author jing1560
  * @data 2024/2/8
+ *
+ * 算法：从前序与中序遍历序列构造二叉树
  */
 public class BuildTreeSolution2 {
 
@@ -51,6 +53,7 @@ public class BuildTreeSolution2 {
         if(left <= right){
             int rootValue = preOrder[rootIndex];
             TreeNode root = new TreeNode(rootValue);
+            // rootIndex为根节点计数器，由于是先序遍历，所以每次+1，表示取到的就是根节点
             rootIndex++;
             root.left = buildTree(map,left, map.get(rootValue) -1, preOrder);
             root.right = buildTree(map,map.get(rootValue) +1, right, preOrder);

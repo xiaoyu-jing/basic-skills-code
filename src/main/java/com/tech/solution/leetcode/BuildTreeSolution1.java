@@ -6,6 +6,10 @@ import java.util.Map;
 /**
  * @author jing1560
  * @data 2024/2/8
+ *
+ * 算法：从前序与中序遍历序列构造二叉树
+ *
+ * 较为复杂，查看简单版： BuildTreeSolution2.java
  */
 public class BuildTreeSolution1 {
 
