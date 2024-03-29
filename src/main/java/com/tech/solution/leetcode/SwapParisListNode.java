@@ -3,6 +3,11 @@ package com.tech.solution.leetcode;
 /**
  * @author jing1560
  * @data 2024/3/26
+ *
+ * 算法：两两交换链表中的节点
+ *
+ * 示例：输入：{1,2,3,4}；
+ *      输出：{2,1,4,3}
  */
 public class SwapParisListNode {
 
@@ -45,7 +50,7 @@ public class SwapParisListNode {
         //此处必须要建一个引用，currentNode用于交换数据 和 变更， currentNode变化的值最终都会自动变更到 head上
         //所以最后直接输出 head 就行
         //此处的玩法可以 参考 InterviewCase2.java 文件
-        ListNode currentNode = head;
+        ListNode currentNode = head;      // TODO   这一行是超重点！！！！！！！！
         while(currentNode != null && currentNode.next != null){
             int tempValue = currentNode.next.val;  //值发生变化
             currentNode.next.val = currentNode.val;  //值发生变化

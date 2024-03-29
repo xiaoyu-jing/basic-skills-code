@@ -5,9 +5,11 @@ import java.util.Arrays;
 /**
  * @author jing1560
  * @data 2024/3/16
- * 二分排序，从10个数中找到3
+ *
+ * 算法：二分查找 - 一维数组
+ * 题目：从10个数中找到3
  */
-public class BinarySortTestCase {
+public class BinarySelectSingleArr {
 
     public static void main(String[] args){
 //        int[] arr = {1,2,3,4,5,6,7,8,9,10};
