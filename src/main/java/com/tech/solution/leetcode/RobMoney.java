@@ -21,6 +21,15 @@ package com.tech.solution.leetcode;
  *      丨 dp[1]=max(nums[0],nums[1])        只有两间房屋，选择其中金额较高的房屋进行偷窃
  *
  * 最终的答案即为 dp[n−1]，其中 n 是数组的长度。
+ *
+ * 【题目分析】
+ * - 第 1 间房屋：S0 = H0 = 1
+ * - 前 2 间房屋：S1 = max(S0, H1) = 2
+ * - 前 3 间房屋：S2 = max(S1, S0 + H2) = 4
+ * - 前 4 间房屋：S3 = max(S2, S1 + H3) = 4
+ * - 递推公式：   Sn = max(Sn-1, Sn-2 + Hn)
+ *     偷窃前 n-1 间房屋的最高金额  或  偷窃前 n-2 间房屋的最高金额 + 第 n 间房屋的金额
+ *
  */
 public class RobMoney {
 
