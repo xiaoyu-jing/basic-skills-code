@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * @author jing1560
  * @data 2024/3/19
- * 数组中第K个最大元素（要求时间复杂度为 O(n)）
+ * 算法：数组中第K个最大元素（要求时间复杂度为 O(n)）
  */
 public class FindKthLargest {
 
@@ -41,12 +41,4 @@ public class FindKthLargest {
         }
     }
 
-    /*public static void bucketSort(){
-        int[] arr = {3,2,3,1,2,4,5,5,6};
-        int[] newArr = new int[arr.length];
-        for(int i = 0){
-
-        }
-        Arrays.stream(arr).min().getAsInt();
-    }*/
 }
