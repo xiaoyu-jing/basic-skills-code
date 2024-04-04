@@ -60,6 +60,12 @@ public class LinkedListCycleKth {
         return initNode;
     }
 
+    /**
+     * 将链表数据 转为 List，将List进行循环，再将结果组装为链表
+     * @param node
+     * @param k
+     * @return
+     */
     private static LinkedNode cycleKthSolution1(LinkedNode node, int k){
 
         List<Integer> list = new ArrayList<>();
