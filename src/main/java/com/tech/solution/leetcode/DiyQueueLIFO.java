@@ -15,11 +15,13 @@ package com.tech.solution.leetcode;
  *
  * 注意：以下算法为模拟 ArrayDeque 底层实现原理，手撕代码，实现一个队列，但 队列的元素是 先进后出 的，并不是 先进先出 的。
  *      该算法类似栈。 先进先出 的算法逻辑 可查看另一个 代码文件
+ *
+ * LIFO ： 后进先出
  */
-public class DiyQueue {
+public class DiyQueueLIFO {
 
     public static void main(String[] args){
-        DiyQueue queue = new DiyQueue();
+        DiyQueueLIFO queue = new DiyQueueLIFO();
         queue.addFirst(1);
         queue.addFirst(2);
         queue.addFirst(3);
@@ -56,7 +58,7 @@ public class DiyQueue {
     //尾指针的位置
     private int tail;
 
-    public DiyQueue(){
+    public DiyQueueLIFO(){
         elements = new Object[16];
     }
 
