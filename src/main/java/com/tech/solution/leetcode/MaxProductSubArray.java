@@ -5,6 +5,16 @@ package com.tech.solution.leetcode;
  * @data 2024/4/5
  *
  * 算法：乘积最大子数组
+ *
+ * 示例 1:
+ * 输入: nums = [2,3,-2,4]
+ * 输出: 6
+ * 解释: 子数组 [2,3] 有最大乘积 6。
+ *
+ * 示例 2:
+ * 输入: nums = [-2,0,-1]
+ * 输出: 0
+ * 解释: 结果不能为 2, 因为 [-2,-1] 不是子数组。
  */
 public class MaxProductSubArray {
 
