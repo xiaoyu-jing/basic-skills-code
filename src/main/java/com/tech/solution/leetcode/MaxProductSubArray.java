@@ -24,6 +24,8 @@ public class MaxProductSubArray {
 
         System.out.println("【解法二】{2, 3, -2, 4} 最大子数组的乘积为：" + maxProductSolution2(new int[]{2, 3, -2, 4}));
         System.out.println("【解法二】{-2, 3, -4, 5, -7, -3} 最大子数组的乘积为：" + maxProductSolution2(new int[]{-2, 3, -4, 5, -7, -3}));
+
+        System.out.println("【解法三】{-2, 3, -4, 5, -7, -3} 最大子数组的乘积为：" + maxProductSolution3(new int[]{-2, 3, -4, 5, -7, -3}));
     }
 
     /**
@@ -68,5 +70,42 @@ public class MaxProductSubArray {
             }
         }
         return maxValue;
+    }
+
+    /**
+     * 解法三：网友的解法
+     *
+     * 由于负数的出现，会导致之前的最大变成最小，导致后续可能出现的最大变成负数，所以反向再遍历一次求最大。
+     *
+     * 示例：输入：nums=[-2, 3, -4, 5, -7]
+     *           正向 max = 120
+     *           反向 max = 420
+     * @param nums
+     * @return
+     */
+    private static int maxProductSolution3(int[] nums){
+        int product = 1, n = nums.length;
+        int max = nums[0];
+
+        //求正向 乘积 的最大值
+        for(int i = 0;i < n;i++){
+            product *= nums[i];
+            max = Math.max(max, product);
+            if(nums[i] == 0){
+                product = 1;
+            }
+        }
+
+        //求反向 乘积 的最大值
+        product = 1;
+        for(int i = n - 1;i >= 0;i--){
+            product *= nums[i];
+            max = Math.max(max, product);
+            if(nums[i] == 0){
+                product = 1;
+            }
+        }
+
+        return max;
     }
 }
