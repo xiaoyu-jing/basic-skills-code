@@ -53,6 +53,13 @@ public class DiySkipList {
      *        50%的概率返回 1
      *        25%的概率返回 2
      *      12.5%的概率返回 3 ...
+     *
+     *
+     * 跳表同样也是很多层，新增一个数据时，最底层的链表需要插入数据，
+     * 然后，考虑是否需要在上面几层中加入数据做索引 ？ 这个就靠随机函数了。
+     * 例如: 如果跳表中插入数据id=6，且随机函数返回第三层（有25%的概率），那就需要在跳表的最底层到第三层都插入数据。
+     * 跳表跟B+树不一样，跳表是否新增层数，纯粹靠随机函数，不太关心平衡的问题。
+     *
      * @return
      */
     private int randomLevel() {
@@ -129,6 +136,9 @@ public class DiySkipList {
         skipList.insert(5);
         skipList.insert(1);
         System.out.println(skipList.head);
+
+        Node node = skipList.find(5);
+        System.out.println("5 是否存在跳表中：" + node.toString());
     }
 
 }
