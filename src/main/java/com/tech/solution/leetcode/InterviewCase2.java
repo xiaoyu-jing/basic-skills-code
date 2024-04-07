@@ -1,7 +1,9 @@
 package com.tech.solution.leetcode;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author jing1560
@@ -31,25 +33,39 @@ public class InterviewCase2 {
          */
         //初始化循环链表
         ListNode node = initLinkedList(new int[]{3,2,0,-4}, 1);
-        System.out.println("【示例1】方法1 - 循环队列中是否存在环：" + checkCycle1(node));
+        System.out.println("【示例1】方法1 哈希法-Map - 循环队列中是否存在环：" + checkCycle1(node));
 
         //初始化循环链表
         ListNode node2 = initLinkedList(new int[]{3,2,0,-4}, 1);
-        System.out.println("【示例1】方法2 - 循环队列中是否存在环：" + checkCycle2(node2));
+        System.out.println("【示例1】方法1 哈希法-Set - 循环队列中是否存在环：" + checkCycle2(node2));
 
         /**
          * 示例2  {1，2}
          */
         //初始化循环链表
         ListNode node3 = initLinkedList(new int[]{1,2}, 0);
-        System.out.println("【示例2】方法2 - 循环队列中是否存在环：" + checkCycle2(node3));
+        System.out.println("【示例2】方法1 哈希法-Set - 循环队列中是否存在环：" + checkCycle2(node3));
 
         /**
          * 示例3  {1}
          */
         //初始化循环链表
         ListNode node4 = initLinkedList(new int[]{1}, -1);
-        System.out.println("【示例3】方法2 - 循环队列中是否存在环：" + checkCycle2(node4));
+        System.out.println("【示例3】方法1 哈希法-Set - 循环队列中是否存在环：" + checkCycle2(node4));
+
+        /**
+         * 示例4  {1，2}
+         */
+        //初始化循环链表
+        ListNode node5 = initLinkedList(new int[]{1,2}, 0);
+        System.out.println("【示例4】方法2 快慢指针 - 循环队列中是否存在环：" + checkCycle3(node5));
+
+        /**
+         * 示例5  {1}
+         */
+        //初始化循环链表
+        ListNode node6 = initLinkedList(new int[]{1}, -1);
+        System.out.println("【示例5】方法2 快慢指针 - 循环队列中是否存在环：" + checkCycle3(node6));
     }
 
     /**
@@ -127,7 +143,7 @@ public class InterviewCase2 {
     }
 
     /**
-     * 方法1
+     * 方法1: 哈希法 - Map
      * @param node
      * @return
      */
@@ -146,11 +162,33 @@ public class InterviewCase2 {
     }
 
     /**
-     * 方法2 - 快慢指针
+     * 方法1: 哈希法 - Set
      * @param node
      * @return
      */
     private static boolean checkCycle2(ListNode node){
+        Set<ListNode> visited = new HashSet<>();
+        ListNode head = node;
+        while (head != null) {
+            if(visited.contains(head)){
+                return true;
+            }
+            visited.add(head);
+            head = head.next;
+        }
+        return false;
+    }
+
+    /**
+     * 方法2 - 快慢指针 （直接找"相遇点"即可）
+     *
+     * 由于 slow 和 fast 都是 Node节点，slow != fast  用的就是 哈希法 比较的对象，所以只要 hash 值相同，一定是同一个节点，直接返回就行
+     * 但 如果是 leetcoad 的另一道算法【寻找重复数】，本身提供的就是一个 数组，不是链表，数组中 存在很多数字，仅仅通过 slow == fast 一次判断 不足以
+     * 得出 当前的相遇点就是 入环点。 所以对于 【寻找重复数】 这道算法题，需要先找 "相遇点"，再找"入环点"
+     * @param node
+     * @return
+     */
+    private static boolean checkCycle3(ListNode node){
         ListNode slow = node;
         ListNode fast = node.next;
         while (slow != fast) {
