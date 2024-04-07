@@ -16,10 +16,14 @@ public class LeetCodeCommon {
         //threeSum();
 
         //全排列
-        //permute();
+        System.out.println("{1,2,3} 全排列：" + permute(new int[]{1,2,3}));
+        System.out.println("{3,2,1} 全排列：" + permute(new int[]{3,2,1}));
+        System.out.println("{2,3,1} 全排列：" + permute(new int[]{2,3,1}));
+        System.out.println("{1,5,1} 全排列：" + permute(new int[]{1,5,1}));
+        System.out.println("{1,1,5} 全排列：" + permute(new int[]{1,1,5}));
 
         //Arrays.asList方法的 bug测试
-        arrayListTest();
+//        arrayListTest();
 
     }
 
@@ -77,8 +81,7 @@ public class LeetCodeCommon {
      * 全排列
      * @return
      */
-    public static List<List<Integer>> permute(){
-        int[] nums = {1,2,3};
+    public static List<List<Integer>> permute(int[] nums){
 
         int len = nums.length;
         List<List<Integer>> res = new ArrayList<>();
