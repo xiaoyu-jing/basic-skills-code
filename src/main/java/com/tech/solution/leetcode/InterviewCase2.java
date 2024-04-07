@@ -25,6 +25,22 @@ public class InterviewCase2 {
             val = x;
             next = null;
         }
+
+        /**
+         * 这是个循环链表，不能加 toString() 方法，容易造成 内存溢出 （JAVA heap）
+         */
+        /*public String toString(){
+            StringBuilder builder = new StringBuilder();
+            ListNode node = this;
+            while (node != null){
+                if(builder.length() > 0){
+                    builder.append(",");
+                }
+                builder.append(node.val);
+                node = node.next;
+            }
+            return builder.toString();
+        }*/
     }
 
     public static void main(String[] args){
@@ -58,14 +74,24 @@ public class InterviewCase2 {
          */
         //初始化循环链表
         ListNode node5 = initLinkedList(new int[]{1,2}, 0);
-        System.out.println("【示例4】方法2 快慢指针 - 循环队列中是否存在环：" + checkCycle3(node5));
+        System.out.println("【示例4】方法2 快慢指针 - 循环队列中是否存在环：" + checkCycle3(node5)
+                + ", 环的长度为：" + calculateCycleLength(node5));
 
         /**
          * 示例5  {1}
          */
         //初始化循环链表
         ListNode node6 = initLinkedList(new int[]{1}, -1);
-        System.out.println("【示例5】方法2 快慢指针 - 循环队列中是否存在环：" + checkCycle3(node6));
+        System.out.println("【示例5】方法2 快慢指针 - 循环队列中是否存在环：" + checkCycle3(node6)
+                + ", 环的长度为：" + calculateCycleLength(node6));
+
+        /**
+         * 示例6   {3,2,0,-4}
+         */
+        //初始化循环链表
+        ListNode node7 = initLinkedList(new int[]{3,2,0,-4}, 1);
+        System.out.println("【示例6】方法2 快慢指针 - 循环队列中是否存在环：" + checkCycle3(node7)
+                + ", 环的长度为：" + calculateCycleLength(node7));
     }
 
     /**
@@ -189,11 +215,21 @@ public class InterviewCase2 {
      * @return
      */
     private static boolean checkCycle3(ListNode node){
+        ListNode newNode = detectCycle(node);
+        return newNode != null ? true : false;
+    }
+
+    /**
+     * 获取入环节点
+     * @param node
+     * @return
+     */
+    private static ListNode detectCycle(ListNode node){
         ListNode slow = node;
         ListNode fast = node.next;
         while (slow != fast) {
             if(fast == null || fast.next == null){
-                return false;
+                return null;
             }
             //此处为重点！ （如果都各走一步，那永远都追不上）
             // 慢指针每次走一步
@@ -201,7 +237,41 @@ public class InterviewCase2 {
             // 快指针每次走两步
             fast = fast.next.next;
         }
-        return true;
+        return slow;
+    }
+
+    /**
+     * 计算环的长度
+     * @param node
+     * @return
+     */
+    private static int calculateCycleLength(ListNode node){
+        // 获取入环节点
+        ListNode cycleNode = detectCycle(node);
+        int cycleLength = 0;
+        if(cycleNode == null){
+            return cycleLength;
+        }
+        // 此循环的目的：将链表截取到从 入环点 开始
+        ListNode currentNode = node;
+        while (currentNode != null) {
+            if(currentNode == cycleNode){
+                break;
+            }
+            currentNode = currentNode.next;
+        }
+
+        // currentNode 为 入环点 头节点
+        do {
+            currentNode = currentNode.next;
+            // 因为 do-while 循环中，直接从 next 节点开始的, 先 +1，后判断，所以cycleLength 初始化从 0 开始
+            cycleLength++;
+            if(currentNode == cycleNode){
+                break;
+            }
+        } while (currentNode != null);
+
+        return cycleLength;
     }
 
 }
