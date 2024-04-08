@@ -8,28 +8,44 @@ import java.util.*;
  *
  * 算法：下一个排列
  *
+ * 示例 1：
+ * 输入：nums = [1,2,3]
+ * 输出：[1,3,2]
+ *
+ * 示例 2：
+ * 输入：nums = [3,2,1]
+ * 输出：[1,2,3]
+ *
+ * 示例 3：
+ * 输入：nums = [1,1,5]
+ * 输出：[1,5,1]
  */
 public class NextPermutation {
 
     public static void main(String[] args){
 //        System.out.println(Arrays.toString(nextPermutationSolution1(new int[]{3,2,1})));
 
-        System.out.println(Arrays.toString(nextPermutationSolution1(new int[]{1,5,1})));
+//        System.out.println("解法一：{1,5,1} 的下一个排列为：" + Arrays.toString(nextPermutationSolution1(new int[]{1,5,1})));
+
+//        System.out.println("解法二：{1,5,1} 的下一个排列为：" + Arrays.toString(nextPermutationSolution2(new int[]{1,5,1})));
+        System.out.println("解法二：{6,5,3,4,2,1} 的下一个排列为：" + Arrays.toString(nextPermutationSolution2(new int[]{6,5,3,4,2,1})));
     }
 
+    /**
+     * 解法一：先通过深度优先遍历计算出所给数组的全排列组合，然后将全排列组合按自然排序，然后取出 所给数组 的下一个排列
+     *
+     * 如果 所给数组 位于 全排列组合的最后一位，那下一个排列就是 全排列组合的第一位
+     * @param nums
+     * @return
+     */
     private static int[] nextPermutationSolution1(int[] nums){
         List<List<Integer>> res = generateAllPermutation(nums);
         List<Integer> nextList = new ArrayList<>();
         if(res.size() > 0){
-            //List<List<Integer>> sortResList = sortList(res);
             int[] newArr = new int[nums.length];
             System.arraycopy(nums,0, newArr,0, nums.length);
             Arrays.sort(newArr);
             List<List<Integer>> sortResList = generateAllPermutation(newArr);
-            /*Set<List<Integer>> tempSet = new TreeSet<>();
-            sortResList.stream().forEach(list -> tempSet.add(list));
-            List<List<Integer>> resultList = new ArrayList<>();
-            tempSet.stream().forEach(set -> resultList.add(set));*/
 
             for(int i = 0; i < sortResList.size(); i++){
                 boolean flag = true;
@@ -55,21 +71,11 @@ public class NextPermutation {
         return nums;
     }
 
-    private static List<List<Integer>> sortList(List<List<Integer>> res) {
-        // [[3, 2, 1], [3, 1, 2], [2, 3, 1], [2, 1, 3], [1, 3, 2], [1, 2, 3]]
-        List<String> list = new ArrayList<>();
-        for(int i = 0; i < res.size(); i++){
-            /*for(int j = i; j < res.get(i).size(); j++){
-                Collections.sort();
-            }*/
-            list.add(res.get(i).toString());
-            System.out.println(res.get(i).toString());
-        }
-        Collections.sort(list);
-        System.out.println(list);
-        return null;
-    }
-
+    /**
+     * 获取全排列的所有可能
+     * @param nums
+     * @return
+     */
     private static List<List<Integer>> generateAllPermutation(int[] nums){
         List<List<Integer>> res = new ArrayList<>();
         Deque<Integer> path = new ArrayDeque<>();
@@ -93,5 +99,48 @@ public class NextPermutation {
             used[i] = false;
             path.removeLast();
         }
+    }
+
+    /**
+     * 解法二：交换
+     *
+     * [6,5,3,4,2,1] --> [6,5,3,1,2,4] --> [6,5,4,1,2,3]
+     * @param nums
+     * @return
+     */
+    private static int[] nextPermutationSolution2(int[] nums){
+        if(nums.length == 0){
+            return nums;
+        }
+        int len = nums.length;
+        //从后向前遍历
+        for(int i = len - 1; i >= 0; i--){
+            //如果i为0，说明数组从后到前是递增（654321）的,没有更大的了
+            //直接重排序变成一个递减的（123456）符合题意
+            if(i == 0){
+                Arrays.sort(nums);
+                return nums;
+            }else if(nums[i] > nums[i-1]){
+                // 如果后者比前者大
+                // 一旦出现后一个数字nums[i]比前一个大，说明存在更大的整数。 比如 [1,2,3]中的 3 > 2，则 132 > 123
+                // 对nums[i]及后面的数组排序，从小到大。 （因为要寻找 下一个排列，所以 紧挨着 nums[i] 后面的数字一定是个最小序列）
+                Arrays.sort(nums, i, len);
+                for(int j = i; j < len; j++){
+                    //由于从i开始后面已经排序
+                    //那么保证获得比 nums[i-1] 大的数，是 [i,...,len-1] 中最大的,交换即可
+                    if(nums[j] > nums[i-1]){
+                        swap(nums,j,i-1);
+                        return nums;
+                    }
+                }
+            }
+        }
+        return nums;
+    }
+
+    private static void swap(int[] nums,int i,int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
