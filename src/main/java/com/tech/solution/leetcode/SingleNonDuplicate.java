@@ -24,11 +24,14 @@ public class SingleNonDuplicate {
         Deque<Integer> stackDeque = new ArrayDeque<>();
         for(int i = 0; i < nums.length; i++){
             if(stackDeque.contains(nums[i])){
+                // 将 栈 的头部元素取出，并移除
                 stackDeque.pollFirst();
             } else {
+                // 将元素添加到栈的头部
                 stackDeque.addFirst(nums[i]);
             }
         }
+        // 将 栈 的头部元素取出，不移除
         return stackDeque.peekFirst();
     }
 
