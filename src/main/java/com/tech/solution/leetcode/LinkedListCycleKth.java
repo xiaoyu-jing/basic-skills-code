@@ -77,9 +77,10 @@ public class LinkedListCycleKth {
         if(list.size() <= 0 || k <= 0){
             return node;
         }
-        List<Integer> newList = new ArrayList<>(list.size());
-        // 此处必须进行一次 list 的转换（在同一个list上既遍历又修改，会报错ConcurrentModificationException），用 list 遍历，用 newList 修改值
-        newList.addAll(list);
+        /**
+         * 在同一个list上既遍历又修改，无影响；
+         * 但如果既遍历又修改数组结构（如删除） 就会报错ConcurrentModificationException）
+         */
         // 第一层循环表示 移动的轮次，移动 k 轮，也就是 向右移动 k 个数
         for(int i = 0; i < k; i++){
             int tailTemp = 0;
@@ -92,12 +93,11 @@ public class LinkedListCycleKth {
                 }
                 if(j == -1){
                     // 将最后一位数字 塞到 list的头部
-                    newList.set(j + 1, tailTemp);
+                    list.set(j + 1, tailTemp);
                     continue;
                 }
-                newList.set(j + 1, list.get(j));
+                list.set(j + 1, list.get(j));
             }
-            list = newList;
         }
 
         //处理 list，组装 Node
