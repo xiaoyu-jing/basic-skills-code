@@ -46,14 +46,17 @@ public class ThreeSum {
         List<List<Integer>> resultList = new ArrayList<>();
         Arrays.sort(nums);
         for(int i = 0; i < nums.length; i++){
+            //排除重复数
             if(i > 0 && nums[i] == nums[i - 1]){
                 continue;
             }
             for(int j = i+1; j < nums.length; j++){
+                //排除重复数
                 if(j > i+1 && nums[j] == nums[j - 1]){
                     continue;
                 }
                 for(int k = j+1; k < nums.length; k++){
+                    //排除重复数
                     if(k > j+1 && nums[k] == nums[k - 1]){
                         continue;
                     }
