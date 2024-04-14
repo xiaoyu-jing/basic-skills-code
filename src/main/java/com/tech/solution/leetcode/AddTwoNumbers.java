@@ -29,15 +29,20 @@ public class AddTwoNumbers {
         // 入参是 new 了 String类型的数组，是为了 直接复用 builderNode 方法。 理论上最好是 new int[]
         ListNode node1 = builderNode(new String[]{"2","4","3"}, 0);
         ListNode node2 = builderNode(new String[]{"5","6","4"}, 0);
-        System.out.println(addTwoNumbers(node1,node2).toString());
+        System.out.println(addTwoNumbers1(node1,node2).toString());
 
         ListNode node11 = builderNode(new String[]{"0"}, 0);
         ListNode node22 = builderNode(new String[]{"0"}, 0);
-        System.out.println(addTwoNumbers(node11,node22).toString());
+        System.out.println(addTwoNumbers1(node11,node22).toString());
 
         ListNode node111 = builderNode(new String[]{"9","9","9","9","9","9","9"}, 0);
         ListNode node222 = builderNode(new String[]{"9","9","9","9"}, 0);
-        System.out.println(addTwoNumbers(node111,node222).toString());
+        System.out.println(addTwoNumbers1(node111,node222).toString());
+
+
+        ListNode node1111 = builderNode(new String[]{"2","4","3"}, 0);
+        ListNode node2222 = builderNode(new String[]{"5","6","4"}, 0);
+        System.out.println(addTwoNumbers2(node1111,node2222).toString());
     }
 
     public static class ListNode {
@@ -60,7 +65,13 @@ public class AddTwoNumbers {
         }
     }
 
-    private static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    /**
+     * 解法1
+     * @param l1
+     * @param l2
+     * @return
+     */
+    private static ListNode addTwoNumbers1(ListNode l1, ListNode l2) {
         int l1Num = calculateReverseValue(l1);
         int l2Num = calculateReverseValue(l2);
         int sum = l1Num + l2Num;
@@ -87,6 +98,37 @@ public class AddTwoNumbers {
         }
         ListNode node = new ListNode(Integer.valueOf(resultArr[count]));
         node.next = builderNode(resultArr, count + 1);
+        return node;
+    }
+
+    /**
+     * 解法2
+     * @param l1
+     * @param l2
+     * @return
+     */
+    private static ListNode addTwoNumbers2(ListNode l1, ListNode l2) {
+        return addCompute(l1,l2,0);
+    }
+
+    /**
+        返回两个链表相加的头部
+     */
+    private static ListNode addCompute(ListNode l1, ListNode l2, int bit){
+        if(l1 == null && l2 == null && bit == 0){
+            return null;
+        }
+        int val = bit;
+        if(l1 != null){
+            val += l1.val;
+            l1 = l1.next;
+        }
+        if(l2 != null){
+            val += l2.val;
+            l2 = l2.next;
+        }
+        ListNode node = new ListNode(val % 10);
+        node.next = addCompute(l1, l2, val / 10);
         return node;
     }
 }
