@@ -32,6 +32,10 @@ public class ProductExceptSelf {
         System.out.println("【使用除法】：" + Arrays.toString(productExceptSelfSolution2(new int[]{1,2,3,4})));
         System.out.println("【使用除法】：" + Arrays.toString(productExceptSelfSolution2(new int[]{-1,1,0,-3,3})));
         System.out.println("【使用除法】：" + Arrays.toString(productExceptSelfSolution2(new int[]{-8,1,0,-3,0})));
+
+        System.out.println("【使用除法-优化】：" + Arrays.toString(productExceptSelfSolution3(new int[]{1,2,3,4})));
+        System.out.println("【使用除法-优化】：" + Arrays.toString(productExceptSelfSolution3(new int[]{-1,1,0,-3,3})));
+        System.out.println("【使用除法-优化】：" + Arrays.toString(productExceptSelfSolution3(new int[]{-8,1,0,-3,0})));
     }
 
     /**
@@ -94,6 +98,45 @@ public class ProductExceptSelf {
                 // 数组中存在1个0时，排除当前位后的乘积为 最大值
                 resultArr[i] = product;
             } else if(zeroMap.get(0) == null){
+                // 数组中不存在0时，排除当前位置后的乘积为 A / 当前位置的值
+                resultArr[i] = product / nums[i];
+            }
+        }
+
+        return resultArr;
+    }
+
+    /**
+     * 解法二：使用除法 【优化逻辑】
+     *
+     * 1、给数组中的所有非0元素乘积 A
+     * 2、不论当前位是否等于0，只要数组中存在多个0时，任意一位都为 0
+     * 3、数组中只有一个0的情况时，当前位置为0，则排除当前位置后的乘积为 A
+     * 4、数组中不存在0的情况时，排除当前位置后的乘积为 A / 当前位置的值
+     * @param nums
+     * @return
+     */
+    private static int[] productExceptSelfSolution3(int[] nums){
+        // 给数组中的 0 进行计数
+        int[] zeroCount = new int[1];
+        // 所有元素的乘积 初始值
+        int product = 1;
+        for(int num : nums){
+            if(num == 0){
+                zeroCount[0]++;
+                continue;
+            }
+            product *= num;
+        }
+        int[] resultArr = new int[nums.length];
+        for(int i = 0; i < nums.length; i++){
+            if(zeroCount[0] > 1){
+                // 不论当前位是否等于0，只要数组中存在多个0时，任意一位都为 0
+                resultArr[i] = 0;
+            } else if(nums[i] == 0 && zeroCount[0] == 1){
+                // 数组中存在1个0时，排除当前位后的乘积为 最大值
+                resultArr[i] = product;
+            } else if(zeroCount[0] == 0){
                 // 数组中不存在0时，排除当前位置后的乘积为 A / 当前位置的值
                 resultArr[i] = product / nums[i];
             }
