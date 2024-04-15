@@ -1,5 +1,7 @@
 package com.tech.solution.leetcode;
 
+import com.sun.xml.internal.bind.v2.TODO;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -75,7 +77,11 @@ public class FindDuplicateData {
 
         // 寻找入环点
         fast = slow;  // fast 指针指向当前 相遇点
-        slow = 0;  // slow 指针指向链表头节点（也就是 数组的第一个）
+        slow = 0;  // slow 指针指向 数组的第一位
+        /**
+         * 注：循环链表II 中和此题有一点差异，循环链表的 slow 和 fast 都是对象，比较的还是Hash值，只要 两者相等了，那一定是 入环点
+         *    此题是 数组，值相等，可能是重复数据，所以此题需要 先判断 【相遇点】，再判断【入环点】
+         */
         while (slow != fast) {
             // slow 和 fast 每次向前走一步，重合点 就是 入环点
             slow = nums[slow];

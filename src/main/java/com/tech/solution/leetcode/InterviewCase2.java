@@ -252,7 +252,7 @@ public class InterviewCase2 {
         if(cycleNode == null){
             return cycleLength;
         }
-        // 此循环的目的：将链表截取到从 入环点 开始
+        // 此循环的目的：将链表截取到从 入环点 开始   (备注： 2024-4-15 此 while 循环意义不大，可以删除，currentNode 直接 从 入环点 cycleNode 开始即可)
         ListNode currentNode = node;
         while (currentNode != null) {
             if(currentNode == cycleNode){
