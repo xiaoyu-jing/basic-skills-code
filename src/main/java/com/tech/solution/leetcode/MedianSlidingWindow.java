@@ -57,7 +57,7 @@ public class MedianSlidingWindow {
             // 循环结束的边界是 i <= nums.lenght - k, 如果再往后滑动 就数组越界了
             for(int i = 0; i <= nums.length - k; i++){
                 // 定义单次滑动窗口数组
-                int[] newArr = new int[k];
+                int[] newArr = new int[k];   // TODO 创建数组的动作可以移到 for 循环的外面，因为每次 拷贝 数组的时候，都是从 0 拷贝，可以直接覆盖
                 System.arraycopy(nums, i, newArr, 0, k);
                 // 必须新建一个数组，然后对新数组排序，不能直接排原数组，会出现结果错乱的情况
                 Arrays.sort(newArr);
@@ -70,7 +70,7 @@ public class MedianSlidingWindow {
         } else {
             // k 为奇数的处理逻辑
             for(int j = 0; j <= nums.length - k; j++){
-                int[] newArr = new int[k];
+                int[] newArr = new int[k];  // TODO 创建数组的动作可以移到 for 循环的外面，因为每次 拷贝 数组的时候，都是从 0 拷贝，可以直接覆盖
                 System.arraycopy(nums, j, newArr, 0, k);
                 Arrays.sort(newArr);
                 int mid = (newArr.length - 1) / 2;
