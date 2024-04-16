@@ -6,6 +6,33 @@ package com.tech.solution.leetcode;
  *
  * 算法：最小栈
  *
+ * 设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈。
+ * 实现 MinStack 类:
+ *  1）MinStack() 初始化堆栈对象。
+ *  2）void push(int val) 将元素val推入堆栈。
+ *  3）void pop() 删除堆栈顶部的元素。
+ *  4）int top() 获取堆栈顶部的元素。
+ *  5）int getMin() 获取堆栈中的最小元素。
+ *
+ *
+ * 示例 1:
+ * 输入：
+ * ["MinStack","push","push","push","getMin","pop","top","getMin"]
+ * [[],[-2],[0],[-3],[],[],[],[]]
+ * 输出：
+ * [null,null,null,null,-3,null,0,-2]
+ *
+ * 解释：
+ * MinStack minStack = new MinStack();
+ * minStack.push(-2);
+ * minStack.push(0);
+ * minStack.push(-3);
+ * minStack.getMin();   --> 返回 -3.
+ * minStack.pop();
+ * minStack.top();      --> 返回 0.
+ * minStack.getMin();   --> 返回 -2.
+ *
+ * --------------------------------【扩展知识】--------------------------------
  * LinkedList 是一个双端队列，等价于 Deque、Stack， JAVA中已经不建议使用 Stack，推荐使用性能更好的 Deque
  *
  * LinkedList、Deque、Stack 三者 都有 peek() 方法，都是表示返回栈顶元素，但是不移除数据
