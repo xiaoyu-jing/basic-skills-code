@@ -6,7 +6,7 @@ import java.util.*;
  * @author jing1560
  * @data 2024/3/25
  *
- * 算法：【矩阵置零】
+ * 算法：矩阵置零
  *
  * 给定一个 m x n 的矩阵，如果一个元素为 0 ，则将其所在行和列的所有元素都设为 0 。请使用 原地 算法。
  *
@@ -17,6 +17,12 @@ import java.util.*;
  * 示例 2：
  * 输入：matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
  * 输出：[[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+ *
+ * 提示：
+ * m == matrix.length
+ * n == matrix[0].length
+ * 1 <= m, n <= 200
+ * -2^31 <= matrix[i][j] <= 2^31 - 1
  */
 public class MatrixSetZeroes {
 
@@ -49,15 +55,15 @@ public class MatrixSetZeroes {
     }
 
     private static void setZeroes(int[][] matrix) {
-        List<String> list = new ArrayList<>();
+        List<String> zeroIndexList = new ArrayList<>();
         for(int i = 0; i < matrix.length; i++){
             for(int j = 0; j < matrix[i].length; j++){
                 if(matrix[i][j] == 0){
-                    findAndSetZeroes(matrix,i,j,list);
+                    findAndSetZeroes(matrix, i, j, zeroIndexList);
                 }
             }
         }
-        for(String str : list){
+        for(String str : zeroIndexList){
             String[] split = str.split("-");
             Integer key = Integer.valueOf(split[0]);
             Integer value = Integer.valueOf(split[1]);
@@ -65,30 +71,37 @@ public class MatrixSetZeroes {
         }
     }
 
-    private static void findAndSetZeroes(int[][] matrix,int i,int j,List<String> list){
+    /**
+     * 中：matrix[i][j]
+     * 上：matrix[i-1][j]
+     * 下：matrix[i+1][j]
+     * 左：matrix[i][j-1]
+     * 右：matrix[i][j+1]
+     */
+    private static void findAndSetZeroes(int[][] matrix, int i, int j, List<String> zeroIndexList){
         int row = i;
         int column = j;
         //上  matrix[i-1][j]
         while ((i - 1) >= 0){
-            list.add((i-1) + "-" + j);
+            zeroIndexList.add((i-1) + "-" + j);
             i--;
         }
         i = row;
         //下  matrix[i+1][j]
         while ((i + 1) < matrix.length){
-            list.add((i+1) + "-" + j);
+            zeroIndexList.add((i+1) + "-" + j);
             i++;
         }
         i = row;
         //左  matrix[i][j-1]
         while ((j - 1) >= 0){
-            list.add(i + "-" + (j-1));
+            zeroIndexList.add(i + "-" + (j-1));
             j--;
         }
         j = column;
         //右  matrix[i][j+1]
         while ((j + 1) < matrix[i].length){
-            list.add(i + "-" + (j+1));
+            zeroIndexList.add(i + "-" + (j+1));
             j++;
         }
     }
