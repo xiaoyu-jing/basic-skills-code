@@ -6,6 +6,9 @@ package com.tech.solution.leetcode;
  *
  * 算法：乘积最大子数组
  *
+ * 给你一个整数数组 nums ，请你找出数组中乘积最大的非空连续子数组（该子数组中至少包含一个数字），并返回该子数组所对应的乘积。
+ * 测试用例的答案是一个 32-位 整数。
+ *
  * 示例 1:
  * 输入: nums = [2,3,-2,4]
  * 输出: 6
@@ -42,7 +45,7 @@ public class MaxProductSubArray {
         // pre 表示前面值的乘积
         int pre = 1;
         for(int i = 0; i < nums.length; i++){
-            //如果前边累乘 后还不如自己本身大，那就把前边的都扔掉，从自己本身重新开始累加。
+            //如果前边累乘 后还不如自己本身大，那就把前边的都扔掉，从自己本身重新开始累乘。
             //相当于双重for循环跳过了 前面的值
             pre = Math.max(pre * nums[i], nums[i]);
             maxValue = Math.max(pre, maxValue);

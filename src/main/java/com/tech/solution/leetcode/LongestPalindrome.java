@@ -8,6 +8,18 @@ import java.util.List;
  * @data 2024/4/5
  *
  * 算法：最长回文子串
+ *
+ * 给你一个字符串 s，找到 s 中最长的回文子串
+ * 如果字符串的反序与原始字符串相同，则该字符串称为回文字符串。
+ *
+ * 示例 1：
+ * 输入：s = "babad"
+ * 输出："bab"
+ * 解释："aba" 同样是符合题意的答案。
+ *
+ * 示例 2：
+ * 输入：s = "cbbd"
+ * 输出："bb"
  */
 public class LongestPalindrome {
 
@@ -45,7 +57,7 @@ public class LongestPalindrome {
     }
 
     /**
-     * 解法二：暴力解法的优化版
+     * 解法二：先计算回文子串的索引位置，再进行切割
      * @param str
      * @return
      */
@@ -75,8 +87,8 @@ public class LongestPalindrome {
      * 校验是否回文串
      * 验证子串 strArray[left...right] 是否为回文串
      * @param strArray
-     * @param i
-     * @param j
+     * @param left
+     * @param right
      * @return
      */
     private static boolean validPalindromic(char[] strArray, int left, int right){
