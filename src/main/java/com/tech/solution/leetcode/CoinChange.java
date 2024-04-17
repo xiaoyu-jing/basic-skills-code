@@ -30,8 +30,9 @@ public class CoinChange {
         System.out.println("【暴力求解】最少硬币数为（答案错误）：" + coinChangeSolution1(new int[]{186,419,83,408}, 6249));*/
 
         System.out.println("【动态规划】最少硬币数为：" + coinChangeSolution2(new int[]{1,2,5}, 11));
-        /*System.out.println("【动态规划】最少硬币数为：" + coinChangeSolution2(new int[]{186,419,83,408}, 6249));
-        System.out.println("【动态规划】最少硬币数为：" + coinChangeSolution2(new int[]{2}, 3));*/
+
+        System.out.println("【动态规划】最少硬币数为：" + coinChangeSolution2(new int[]{186,419,83,408}, 6249));
+        System.out.println("【动态规划】最少硬币数为：" + coinChangeSolution2(new int[]{2}, 3));
     }
 
     /**
