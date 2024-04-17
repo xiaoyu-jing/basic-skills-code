@@ -82,6 +82,7 @@ public class AddTwoNumbers {
         ListNode sumNode = builderNode(resultArr, 0);
         return sumNode;
     }
+
     // 计算翻转数字
     private static int calculateReverseValue(ListNode node){
         StringBuilder builder = new StringBuilder();
