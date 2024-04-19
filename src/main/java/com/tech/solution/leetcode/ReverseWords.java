@@ -44,7 +44,6 @@ public class ReverseWords {
         System.out.println(reverseWords("a good   example"));   // s.split(" "); 的结果为：["a", "good", "","", "example"]
     }
 
-
     public static String reverseWords(String s) {
 //        s = s.trim();   // trim()方法可以去除前后空格，但在该方法中意义不大，可以去掉
         String[] strArr = s.split(" ");
