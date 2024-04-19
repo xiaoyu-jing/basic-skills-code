@@ -94,4 +94,5 @@ public class RemoveNthFromEnd {
         node.next = initBuildeNode(nums, count + 1);
         return node;
     }
+
 }
