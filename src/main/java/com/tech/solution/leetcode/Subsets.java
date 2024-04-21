@@ -15,15 +15,15 @@ public class Subsets {
 
     }
 
-    public List<List<Integer>> subsets(int[] nums) {
+    public static List<List<Integer>> subsets(int[] nums) {
         backtrack(nums, 0);
         return resultList;
     }
 
-    List<List<Integer>> resultList = new ArrayList<>();
-    List<Integer> list = new ArrayList<>();
+    static List<List<Integer>> resultList = new ArrayList<>();
+    static List<Integer> list = new ArrayList<>();
 
-    public void backtrack(int[] nums, int start){
+    public static void backtrack(int[] nums, int start){
         resultList.add(new ArrayList<>(list));
         if(start >= nums.length){
             return;
