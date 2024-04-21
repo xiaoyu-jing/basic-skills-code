@@ -7,4 +7,8 @@ package com.tech.solution.leetcode;
  * 算法：子集
  */
 public class Subsets {
+
+    public static void main(String[] args){
+
+    }
 }
