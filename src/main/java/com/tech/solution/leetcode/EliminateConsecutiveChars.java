@@ -1,7 +1,5 @@
 package com.tech.solution.leetcode;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Stack;
 
 /**
@@ -36,11 +34,14 @@ public class EliminateConsecutiveChars {
           "rggggb",
           "rggggrrb",
           "bbrggggrrb",
-          "bbrggggrrbr"
+          "bbrggggrrbr",
+          "abbaca"
         };
         for(String testCase : testCases){
-            System.out.println(testCase + " => " + eliminateConsecutiveChars2(testCase));
+            System.out.println(testCase + " => " + eliminateConsecutiveChars3(testCase));
         }
+
+//        System.out.println("bbrggggrrbr" + " => " + eliminateConsecutiveChars3("bbrggggrrbr"));
     }
 
     private static String eliminateConsecutiveChars1(String str){
@@ -81,43 +82,101 @@ public class EliminateConsecutiveChars {
         return builder.reverse().toString();
     }
 
-    private static String eliminateConsecutiveChars2(String str){
+    private static String eliminateConsecutiveChars2(String input){
         StringBuilder result = new StringBuilder();
-        int maxCount = 1;
-        int currentCount = 1;
-        int startIndex = 0;
+        int maxCount = 1; // 最长连续字符序列的计数
+        int currentCount = 1; // 当前连续字符序列的计数
 
-        for (int i = 1; i < str.length(); i++) {
-            if (str.charAt(i) == str.charAt(i - 1)) {
-                // 当前字符与前一个字符相同，增加计数
+        for (int i = 1; i < input.length(); i++) {
+            if (input.charAt(i) == input.charAt(i - 1)) {
+                // 当前字符与前一个字符相同，增加连续计数
                 currentCount++;
                 if (currentCount > maxCount) {
-                    // 发现更长的连续序列，更新最大值和起始索引
+                    // 发现更长的连续序列，更新最大值
                     maxCount = currentCount;
-                    startIndex = i - maxCount;
                 }
             } else {
-                // 当前字符与前一个字符不同，检查是否需要消除之前的连续序列
+                // 当前字符与前一个字符不同，处理之前的连续序列
                 if (maxCount > 1) {
                     // 如果连续序列长度大于1，则只保留一个字符
-                    result.append(str.charAt(startIndex + maxCount - 1));
+                    result.append(input.charAt(i - maxCount));
+                } else {
+                    // 否则，将字符添加到结果中
+                    result.append(input.charAt(i - 1));
                 }
-                // 重置计数和起始索引
+                // 重置计数
                 maxCount = 1;
                 currentCount = 1;
-                startIndex = i - 1;
             }
         }
 
         // 处理字符串末尾的连续序列
         if (maxCount > 1) {
-            result.append(str.charAt(startIndex + maxCount - 1));
+            result.append(input.charAt(input.length() - maxCount));
         } else {
-            // 如果字符串末尾没有连续序列，将剩余字符添加到结果中
-            result.append(str.substring(startIndex));
+            // 如果字符串末尾没有连续序列，将最后一个字符添加到结果中
+            result.append(input.charAt(input.length() - 1));
         }
 
         return result.toString();
+    }
+
+    /**
+     *
+     * @param str
+     * @return
+     */
+    private static String eliminateConsecutiveChars3(String str){
+        // 最大连续重复子串的长度
+        int maxLength = 0;
+        // 最大连续重复子串的起始索引
+        int begin = 0;
+        char[] strArr = str.toCharArray();
+        // 因为判断的是 (j - i + 1) > maxLength，所以 最外层循环比内层循环 少1即可
+        for(int i = 0; i < str.length() - 1; i++){
+            for(int j = i + 1; j < str.length(); j++){
+                // 获取最大长度 且 指定区间的子串全为重复字符 时，记录起始索引 和 子串的最大长度
+                if((j - i + 1) > maxLength && validSameChar(strArr, i, j)){
+                    begin = i;
+                    maxLength = j - i + 1;
+                }
+            }
+        }
+        String longStr = str.substring(begin, begin + maxLength);
+        // 剔除最大重复子串
+        String replaceStr = str.replaceAll(longStr, "");
+        char[] newStrArr = replaceStr.toCharArray();
+        // 判断剩余字符串中是否有连续重复字符，如果有设置 flag 为 true，进行下一轮的判断
+        boolean flag = false;
+        for(int k = 1; k < newStrArr.length; k++){
+            if(newStrArr[k] == newStrArr[k - 1]){
+                flag = true;
+            }
+        }
+
+        if(flag){
+            // 存在连续重复字符时，继续进行判断
+            replaceStr = eliminateConsecutiveChars3(replaceStr);
+        }
+        // 不存在连续重复字符时，直接返回剔除重复后的子串
+        return replaceStr;
+    }
+
+    /**
+     * 判断指定区间中是否全为重复字符
+     * @param strArr
+     * @param left
+     * @param right
+     * @return
+     */
+    private static boolean validSameChar(char[] strArr, int left, int right){
+        while (left < right){
+            if(strArr[left] != strArr[left + 1]){
+                return false;
+            }
+            left++;
+        }
+        return true;
     }
 
 }
