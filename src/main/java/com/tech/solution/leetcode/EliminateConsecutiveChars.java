@@ -21,14 +21,14 @@ import java.util.Stack;
  * 6. 'bbrggggrrbr' => 'r'
  *
  * 注意：
- * 1. 优先消除最长的情况
+ * 1. 优先消除最长的情况    【这个条件很重要，字节面试官现场要求注意这个条件！！！！】
  * 2. 长度一样，优先消除左侧
  * 3. 不强要求复杂度
  */
 public class EliminateConsecutiveChars {
 
     public static void main(String[] args){
-        String[] testCases = {
+        /*String[] testCases = {
           "rgb",
           "rggb",
           "rggggb",
@@ -39,9 +39,10 @@ public class EliminateConsecutiveChars {
         };
         for(String testCase : testCases){
             System.out.println(testCase + " => " + eliminateConsecutiveChars3(testCase));
-        }
+        }*/
 
-//        System.out.println("bbrggggrrbr" + " => " + eliminateConsecutiveChars3("bbrggggrrbr"));
+        System.out.println("bbrggggrrbr" + " => " + eliminateConsecutiveChars4("bbrggggrrbr"));
+
     }
 
     private static String eliminateConsecutiveChars1(String str){
@@ -136,9 +137,11 @@ public class EliminateConsecutiveChars {
         for(int i = 0; i < str.length() - 1; i++){
             for(int j = i + 1; j < str.length(); j++){
                 // 获取最大长度 且 指定区间的子串全为重复字符 时，记录起始索引 和 子串的最大长度
-                if((j - i + 1) > maxLength && validSameChar(strArr, i, j)){
+                if((j - i + 1) >= maxLength && validSameChar(strArr, i, j)){
                     begin = i;
                     maxLength = j - i + 1;
+                } else {
+                    break;
                 }
             }
         }
@@ -177,6 +180,43 @@ public class EliminateConsecutiveChars {
             left++;
         }
         return true;
+    }
+
+    private static String eliminateConsecutiveChars4(String str){
+        // 最大连续重复子串的长度
+        int maxLength = 1;
+        // 最大连续重复子串的起始索引
+        int begin = 0;
+        char[] strArr = str.toCharArray();
+        // 因为判断的是 (j - i + 1) > maxLength，所以 最外层循环比内层循环 少1即可
+        for(int i = 0; i < strArr.length; i++){
+            if(i == begin){
+                if(strArr[i+1] == strArr[i]){
+                    maxLength++;
+                    begin = begin + maxLength;
+                } else {
+                    maxLength = 1;
+                }
+            }
+        }
+        String longStr = str.substring(begin, begin + maxLength);
+        // 剔除最大重复子串
+        String replaceStr = str.replaceAll(longStr, "");
+        char[] newStrArr = replaceStr.toCharArray();
+        // 判断剩余字符串中是否有连续重复字符，如果有设置 flag 为 true，进行下一轮的判断
+        boolean flag = false;
+        for(int k = 1; k < newStrArr.length; k++){
+            if(newStrArr[k] == newStrArr[k - 1]){
+                flag = true;
+            }
+        }
+
+        if(flag){
+            // 存在连续重复字符时，继续进行判断
+            replaceStr = eliminateConsecutiveChars3(replaceStr);
+        }
+        // 不存在连续重复字符时，直接返回剔除重复后的子串
+        return replaceStr;
     }
 
 }
