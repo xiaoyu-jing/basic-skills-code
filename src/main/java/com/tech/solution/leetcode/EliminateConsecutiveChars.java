@@ -1,5 +1,7 @@
 package com.tech.solution.leetcode;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 /**
@@ -117,4 +119,5 @@ public class EliminateConsecutiveChars {
 
         return result.toString();
     }
+
 }

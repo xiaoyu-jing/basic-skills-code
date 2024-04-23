@@ -67,7 +67,7 @@ public class LongestPalindrome {
         }
         // 最大回文子串的长度
         int maxLength = 0;
-        // 最大回文子串的其实索引号
+        // 最大回文子串的起始索引号
         int begin = 0;
         char[] strArray = str.toCharArray();
         // 枚举所有长度严格大于 1 的子串 strArray[i...j]
