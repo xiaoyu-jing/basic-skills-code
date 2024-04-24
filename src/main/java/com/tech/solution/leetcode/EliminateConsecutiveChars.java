@@ -40,9 +40,6 @@ public class EliminateConsecutiveChars {
         for(String testCase : testCases){
             System.out.println(testCase + " => " + eliminateConsecutiveChars4(testCase));
         }
-
-        //System.out.println("bbrggggrrbr" + " => " + eliminateConsecutiveChars4("bbrggggrrbr"));
-
     }
 
     private static String eliminateConsecutiveChars1(String str){
@@ -227,7 +224,58 @@ public class EliminateConsecutiveChars {
 
         if(flag){
             // 存在连续重复字符时，继续进行判断
-            replaceStr = eliminateConsecutiveChars3(replaceStr);
+            replaceStr = eliminateConsecutiveChars4(replaceStr);
+        }
+        // 不存在连续重复字符时，直接返回剔除重复后的子串
+        return replaceStr;
+    }
+
+    /**
+     * 解法 5：最佳解法
+     * @param str
+     * @return
+     */
+    private static String eliminateConsecutiveChars5(String str){
+        // 最大连续重复子串的长度
+        int maxLength = 0;
+        // 最大连续重复子串的起始索引
+        int begin = 0;
+        char[] strArr = str.toCharArray();
+        // 用于计数的长度(由于要比较 前者 和 当前值 的大小，默认已经有一位长度了，所以初始值从 1 开始)
+        int countLength = 1;
+        // 示例：bbrggggrrbr
+        for(int i = 1; i < strArr.length; i++){
+            if(strArr[i - 1] == strArr[i]){
+                // 前者 和 当前值 相同时，先给长度 + 1
+                countLength++;
+                // 计数长度 大于 最大长度时，给 起始索引 和 最大长度 赋值
+                if(countLength > maxLength){
+                    // "+1"：i 是 索引，countLength 是 长度，i 是 countLength 的最后边界值，用 索引 - 长度 再 + 1，才是连续重复子串的起始索引位
+                    begin = i - countLength + 1;
+                    maxLength = countLength;
+                }
+            } else {
+                // 如果前后两个值不相同，则将计数器的值还原
+                countLength = 1;
+            }
+        }
+        String longStr = str.substring(begin, begin + maxLength);
+        // 剔除最大重复子串
+        String replaceStr = str.replaceAll(longStr, "");
+        char[] newStrArr = replaceStr.toCharArray();
+        // 判断剩余字符串中是否有连续重复字符，如果有设置 flag 为 true，进行下一轮的判断
+        boolean flag = false;
+        for(int k = 1; k < newStrArr.length; k++){
+            if(newStrArr[k] == newStrArr[k - 1]){
+                // 只要存在连续且重复的字符 就设置为 true
+                flag = true;
+                break;
+            }
+        }
+
+        if(flag){
+            // 存在连续重复字符时，继续进行判断
+            replaceStr = eliminateConsecutiveChars5(replaceStr);
         }
         // 不存在连续重复字符时，直接返回剔除重复后的子串
         return replaceStr;
