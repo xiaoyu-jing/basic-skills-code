@@ -28,7 +28,7 @@ import java.util.Stack;
 public class EliminateConsecutiveChars {
 
     public static void main(String[] args){
-        /*String[] testCases = {
+        String[] testCases = {
           "rgb",
           "rggb",
           "rggggb",
@@ -38,10 +38,10 @@ public class EliminateConsecutiveChars {
           "abbaca"
         };
         for(String testCase : testCases){
-            System.out.println(testCase + " => " + eliminateConsecutiveChars3(testCase));
-        }*/
+            System.out.println(testCase + " => " + eliminateConsecutiveChars4(testCase));
+        }
 
-        System.out.println("bbrggggrrbr" + " => " + eliminateConsecutiveChars4("bbrggggrrbr"));
+        //System.out.println("bbrggggrrbr" + " => " + eliminateConsecutiveChars4("bbrggggrrbr"));
 
     }
 
@@ -141,6 +141,7 @@ public class EliminateConsecutiveChars {
                     begin = i;
                     maxLength = j - i + 1;
                 } else {
+                    // 此行为优化写法，可减少遍历的次数，提高性能
                     break;
                 }
             }
@@ -182,21 +183,34 @@ public class EliminateConsecutiveChars {
         return true;
     }
 
+    /**
+     * 解法 4：优化写法
+     * @param str
+     * @return
+     */
     private static String eliminateConsecutiveChars4(String str){
         // 最大连续重复子串的长度
-        int maxLength = 1;
+        int maxLength = 0;
         // 最大连续重复子串的起始索引
         int begin = 0;
         char[] strArr = str.toCharArray();
-        // 因为判断的是 (j - i + 1) > maxLength，所以 最外层循环比内层循环 少1即可
-        for(int i = 0; i < strArr.length; i++){
-            if(i == begin){
-                if(strArr[i+1] == strArr[i]){
-                    maxLength++;
-                    begin = begin + maxLength;
-                } else {
-                    maxLength = 1;
+        // 用于计数的长度(由于要比较 后者 和 当前值 的大小，默认已经有一位长度了，所以初始值从 1 开始)
+        int countLength = 1;
+        // bbrggggrrbr
+        for(int i = 0; i < strArr.length - 1; i++){
+            if(strArr[i] == strArr[i+1]){
+                // 后者 和 当前值 相同时，先给长度 + 1
+                countLength++;
+                // 计数长度 大于 最大长度时，给 起始索引 和 最大长度 赋值
+                if(countLength > maxLength){
+                    // 第一个"+1"：因为是 后者 和 当前值 比较，所以 countLength 记录的最大位置 要比 i 多 1，（i - countLength）相当于多减了 1，还需要加回来
+                    // 第二个"+1"：i 是 索引，比实际长度小 1，countLength 是 长度，用 索引 - 长度 还应该再 + 1，才是真实的索引位
+                    begin = i - countLength + 1 + 1;
+                    maxLength = countLength;
                 }
+            } else {
+                // 如果前后两个值不相同，则将计数器的值还原
+                countLength = 1;
             }
         }
         String longStr = str.substring(begin, begin + maxLength);
