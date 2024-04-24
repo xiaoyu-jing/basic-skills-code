@@ -1,5 +1,7 @@
 package com.tech.solution.leetcode;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 /**
@@ -27,6 +29,10 @@ import java.util.Stack;
  */
 public class EliminateConsecutiveChars {
 
+    /**
+     * 最佳解法 查看 【解法 3】
+     * @param args
+     */
     public static void main(String[] args){
         String[] testCases = {
           "rgb",
@@ -38,93 +44,17 @@ public class EliminateConsecutiveChars {
           "abbaca"
         };
         for(String testCase : testCases){
-            System.out.println(testCase + " => " + eliminateConsecutiveChars4(testCase));
-        }
-    }
-
-    private static String eliminateConsecutiveChars1(String str){
-        Stack<Character> stack = new Stack<>();
-        int maxCount = 0;
-        char currentChar = 0;
-        int currentCount = 0;
-
-        for(int i = 0; i < str.length(); i++){
-            char c = str.charAt(i);
-            if(c == currentChar){
-                currentCount++;
-                maxCount = Math.max(maxCount, currentCount);
-            } else {
-                if (currentCount > 0) {
-                    // 如果当前字符有连续的，将其压入栈中，并保留最长的连续次数
-                    for(int j = 0; j < maxCount; j++){
-                        stack.push(currentChar);
-                    }
-                }
-                currentChar = c;
-                currentCount = 1;
-                maxCount = 1;
-            }
+            System.out.println(testCase + " => " + eliminateConsecutiveChars3(testCase));
         }
 
-        // 处理最后一个字符的连续情况
-        if(currentCount > 0){
-            for(int j = 0; j < maxCount; j++){
-                stack.push(currentChar);
-            }
-        }
-
-        StringBuilder builder = new StringBuilder();
-        while (!stack.isEmpty()) {
-            builder.append(stack.pop());
-        }
-        return builder.reverse().toString();
-    }
-
-    private static String eliminateConsecutiveChars2(String input){
-        StringBuilder result = new StringBuilder();
-        int maxCount = 1; // 最长连续字符序列的计数
-        int currentCount = 1; // 当前连续字符序列的计数
-
-        for (int i = 1; i < input.length(); i++) {
-            if (input.charAt(i) == input.charAt(i - 1)) {
-                // 当前字符与前一个字符相同，增加连续计数
-                currentCount++;
-                if (currentCount > maxCount) {
-                    // 发现更长的连续序列，更新最大值
-                    maxCount = currentCount;
-                }
-            } else {
-                // 当前字符与前一个字符不同，处理之前的连续序列
-                if (maxCount > 1) {
-                    // 如果连续序列长度大于1，则只保留一个字符
-                    result.append(input.charAt(i - maxCount));
-                } else {
-                    // 否则，将字符添加到结果中
-                    result.append(input.charAt(i - 1));
-                }
-                // 重置计数
-                maxCount = 1;
-                currentCount = 1;
-            }
-        }
-
-        // 处理字符串末尾的连续序列
-        if (maxCount > 1) {
-            result.append(input.charAt(input.length() - maxCount));
-        } else {
-            // 如果字符串末尾没有连续序列，将最后一个字符添加到结果中
-            result.append(input.charAt(input.length() - 1));
-        }
-
-        return result.toString();
     }
 
     /**
-     *
+     * 解法 1：参考 LeetCode《最长回文子串》获取 "最大连续重复子串的长度" 和 "最大连续重复子串的起始索引"
      * @param str
      * @return
      */
-    private static String eliminateConsecutiveChars3(String str){
+    private static String eliminateConsecutiveChars1(String str){
         // 最大连续重复子串的长度
         int maxLength = 0;
         // 最大连续重复子串的起始索引
@@ -138,7 +68,8 @@ public class EliminateConsecutiveChars {
                     begin = i;
                     maxLength = j - i + 1;
                 } else {
-                    // 此行为优化写法，可减少遍历的次数，提高性能
+                    // 此行为优化写法，可减少遍历的次数，提高性能 ； 配合 (j - i + 1) >= maxLength 一起使用，必须是 ">=" ；
+                    // 不加 break 这个 else 块， ">=" 需要改为 ">"
                     break;
                 }
             }
@@ -157,7 +88,7 @@ public class EliminateConsecutiveChars {
 
         if(flag){
             // 存在连续重复字符时，继续进行判断
-            replaceStr = eliminateConsecutiveChars3(replaceStr);
+            replaceStr = eliminateConsecutiveChars1(replaceStr);
         }
         // 不存在连续重复字符时，直接返回剔除重复后的子串
         return replaceStr;
@@ -181,11 +112,11 @@ public class EliminateConsecutiveChars {
     }
 
     /**
-     * 解法 4：优化写法
+     * 解法 2：优化写法   （一层 for 循环）
      * @param str
      * @return
      */
-    private static String eliminateConsecutiveChars4(String str){
+    private static String eliminateConsecutiveChars2(String str){
         // 最大连续重复子串的长度
         int maxLength = 0;
         // 最大连续重复子串的起始索引
@@ -224,18 +155,18 @@ public class EliminateConsecutiveChars {
 
         if(flag){
             // 存在连续重复字符时，继续进行判断
-            replaceStr = eliminateConsecutiveChars4(replaceStr);
+            replaceStr = eliminateConsecutiveChars2(replaceStr);
         }
         // 不存在连续重复字符时，直接返回剔除重复后的子串
         return replaceStr;
     }
 
     /**
-     * 解法 5：最佳解法
+     * 解法 3：最佳解法  （一层 for 循环）
      * @param str
      * @return
      */
-    private static String eliminateConsecutiveChars5(String str){
+    private static String eliminateConsecutiveChars3(String str){
         // 最大连续重复子串的长度
         int maxLength = 0;
         // 最大连续重复子串的起始索引
@@ -275,10 +206,64 @@ public class EliminateConsecutiveChars {
 
         if(flag){
             // 存在连续重复字符时，继续进行判断
-            replaceStr = eliminateConsecutiveChars5(replaceStr);
+            replaceStr = eliminateConsecutiveChars3(replaceStr);
         }
         // 不存在连续重复字符时，直接返回剔除重复后的子串
         return replaceStr;
+    }
+
+    /**
+     * 解法 4：通义千问 的解法 + 人工修改后 才正确
+     * @param s
+     * @return
+     */
+    public static String eliminateConsecutiveChars4(String s) {
+        StringBuilder sb = new StringBuilder(s);
+        while (true) {
+            // 最大连续重复子串的长度
+            int maxLength = 0;
+            // 最大连续重复子串的起始索引
+            int begin = 0;
+            // 用于计数的长度(由于要比较 前者 和 当前值 的大小，默认已经有一位长度了，所以初始值从 1 开始)
+            int countLength = 1;
+
+            // 找到最左边最长的连续子串
+            for (int i = 1; i < sb.length(); i++) {
+                if (sb.charAt(i) == sb.charAt(i - 1)) {
+                    // 前者 和 当前值 相同时，先给长度 + 1
+                    countLength++;
+                    // 计数长度 大于 最大长度时，给 起始索引 和 最大长度 赋值
+                    if(countLength > maxLength){
+                        // "+1"：i 是 索引，countLength 是 长度，i 是 countLength 的最后边界值，用 索引 - 长度 再 + 1，才是连续重复子串的起始索引位
+                        begin = i - countLength + 1;
+                        maxLength = countLength;
+                    }
+                } else {
+                    // 如果前后两个值不相同，则将计数器的值还原
+                    countLength = 1;
+                }
+            }
+
+            // Eliminate the longest consecutive substring
+            sb.delete(begin, begin + maxLength);
+
+            // 判断剩余字符串中是否有连续重复字符，如果有设置 flag 为 true，进行下一轮的判断
+            boolean flag = false;
+            for(int k = 1; k < sb.toString().length(); k++){
+                if(sb.charAt(k) == sb.charAt(k - 1)){
+                    // 只要存在连续且重复的字符 就设置为 true
+                    flag = true;
+                    break;
+                }
+            }
+
+            if(!flag){
+                // 不存在连续重复字符时，跳出循环
+                break;
+            }
+        }
+
+        return sb.toString();
     }
 
 }
