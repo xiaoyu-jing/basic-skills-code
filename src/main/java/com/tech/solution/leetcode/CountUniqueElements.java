@@ -25,7 +25,7 @@ public class CountUniqueElements {
      * @param nums
      * @return
      */
-    /*public static int countUniqueElements1(int[] nums) {
+    public static int countUniqueElements1(int[] nums) {
         int n = nums.length;
         if(n == 0 || nums == null){
             return 0;
@@ -54,7 +54,7 @@ public class CountUniqueElements {
             }
         }
         return sum;
-    }*/
+    }
 
     /**
      * 解法 2：牛客的网友答案
