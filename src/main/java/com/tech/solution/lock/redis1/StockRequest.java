@@ -16,8 +16,10 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 class StockRequest implements Serializable {
+
     //会员id
     String memberId;
     //购买数量
     int buyNum;
+
 }
