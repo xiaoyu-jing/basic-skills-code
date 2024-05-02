@@ -9,6 +9,7 @@ import java.io.IOException;
  * Redis 分布式分段锁单线程测试
  */
 class SegmentDistributeLockTest{
+
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         // 模拟单线程扣减
         SegmentDistributeLock segmentDistributeLock = new SegmentDistributeLock();
@@ -27,4 +28,5 @@ class SegmentDistributeLockTest{
          * RedisStock{stockName='pId_stock_04', num=20}
          */
     }
+
 }
