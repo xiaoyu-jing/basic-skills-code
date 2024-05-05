@@ -40,16 +40,70 @@ public class FindAnagrams {
         System.out.println(findAnagramsSolution3("abab", "ab"));
     }
 
+    /**
+     解法一：暴力解法（会超出时间限制）
+     */
+    public List<Integer> findAnagramsSolution1(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        if(s.length() < p.length()){
+            return res;
+        }
+        String[] pArr = p.split("");
+        Arrays.sort(pArr);
+        String defaultP = Arrays.toString(pArr);
+        for(int i = 0; i <= s.length() - p.length(); i++){
+            String childStr = s.substring(i, i + p.length());
+            String[] childArr = childStr.split("");
+            Arrays.sort(childArr);
+            if(Arrays.toString(childArr).equals(defaultP)){
+                res.add(i);
+            }
+        }
+        return res;
+    }
+
+    /**
+     解法二：暴力解法（会超出时间限制）
+     */
+    public List<Integer> findAnagramsSolution2(String s, String p) {
+        List<Integer> res = new ArrayList<>();
+        if(s.length() < p.length()){
+            return res;
+        }
+        String[] pArr = p.split("");
+        Arrays.sort(pArr);
+        String defaultP = Arrays.toString(pArr);
+        String[] srcArr = s.split("");
+        for(int i = 0; i <= s.length() - p.length(); i++){
+            String[] childArr = new String[p.length()];
+            System.arraycopy(srcArr, i, childArr, 0, p.length());
+            Arrays.sort(childArr);
+            if(Arrays.toString(childArr).equals(defaultP)){
+                res.add(i);
+            }
+        }
+        return res;
+    }
+
+    /**
+     * 解法三：简易指针（耗时较长）
+     * @param s
+     * @param p
+     * @return
+     */
     public static List<Integer> findAnagramsSolution3(String s, String p) {
         List<Integer> res = new ArrayList<>();
         if(s.length() < p.length()){
             return res;
         }
+        // p 字符串进行字典序排序
         char[] pArr = p.toCharArray();
         Arrays.sort(pArr);
         for(int i = 0; i <= s.length() - p.length(); i++){
+            // s 字符串按照指定索引进行字典序排序
             char[] srcArr = s.toCharArray();
             Arrays.sort(srcArr, i, i + p.length());
+            // 临时指针计数器
             int k = 0;
             for(int j = i; j < i + p.length(); j++){
                 if(srcArr[j] != pArr[k]){
@@ -58,6 +112,7 @@ public class FindAnagrams {
                 }
                 k++;
             }
+            // k 大于 则表示存在符合条件的字母异位词
             if(k > 0){
                 res.add(i);
             }
