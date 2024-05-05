@@ -36,6 +36,8 @@ public class FindAnagrams {
 
     public static void main(String[] args){
         System.out.println(findAnagramsSolution3("cbaebabacd", "abc"));
+
+        System.out.println(findAnagramsSolution3("abab", "ab"));
     }
 
     public static List<Integer> findAnagramsSolution3(String s, String p) {
