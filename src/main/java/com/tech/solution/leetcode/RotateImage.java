@@ -1,6 +1,9 @@
 package com.tech.solution.leetcode;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * @author jing1560
@@ -30,6 +33,18 @@ public class RotateImage {
         int[][] matrix = {{1,2,3}, {4,5,6},{7,8,9}};
         rotateImageSolution1(matrix);
         printImage(matrix);
+
+        int[][] matrix1 = {{5,1,9,11}, {2,4,8,10},{13,3,6,7},{15,14,12,16}};
+        rotateImageSolution1(matrix1);
+        printImage(matrix1);
+
+        int[][] matrix2 = {{1,2,3}, {4,5,6},{7,8,9}};
+        rotateImageSolution2(matrix2);
+        printImage(matrix2);
+
+        int[][] matrix3 = {{5,1,9,11}, {2,4,8,10},{13,3,6,7},{15,14,12,16}};
+        rotateImageSolution2(matrix3);
+        printImage(matrix3);
     }
 
     /**
@@ -55,5 +70,31 @@ public class RotateImage {
         for(int i = 0; i < matrix.length; i++){
             System.out.println(Arrays.toString(matrix[i]));
         }
+        System.out.println();
     }
+
+    /**
+     * 解法二：原地旋转 (存入 Map 中)
+     * @param matrix
+     */
+    private static void rotateImageSolution2(int[][] matrix){
+        int n = matrix.length;
+        Map<String, Integer> map = new HashMap<>();
+        String location = "";
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                location = j + "-" + (n - i - 1);
+                map.put(location, matrix[i][j]);
+            }
+        }
+
+        Iterator iterator = map.entrySet().iterator();
+        while(iterator.hasNext()){
+            Map.Entry entry = (Map.Entry)iterator.next();
+            String locationKey = (String)entry.getKey();
+            String[] locationArr = locationKey.split("-");
+            matrix[Integer.valueOf(locationArr[0])][Integer.valueOf(locationArr[1])] = (Integer)entry.getValue();
+        }
+    }
+
 }
