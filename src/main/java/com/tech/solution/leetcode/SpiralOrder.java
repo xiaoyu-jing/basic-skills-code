@@ -28,9 +28,22 @@ import java.util.List;
 public class SpiralOrder {
 
     public static void main(String[] args){
+        int[][] matrix = {{1,2,3}, {4,5,6},{7,8,9}};
+        System.out.println(spiralOrder(matrix));
 
+        int[][] matrix1 = {{1,2,3,4}, {5,6,7,8},{9,10,11,12}};
+        System.out.println(spiralOrder(matrix1));
     }
 
+    /**
+     * 四个指针转圈圈
+     * 1、从左到右，顶部一层遍历完往下移一位，top++；
+     * 2、从上到下，遍历完右侧往左移一位，right--；
+     * 3、从右到左，判断top <= bottom，即是否上下都走完了。遍历完底部上移，bottom--；
+     * 4、从下到上，判断left <= right，遍历完左侧右移，left++；
+     * @param matrix
+     * @return
+     */
     public static List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> res = new ArrayList<>();
         int m = matrix.length, n = matrix[0].length;
