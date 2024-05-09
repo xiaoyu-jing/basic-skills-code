@@ -1,5 +1,7 @@
 package com.tech.solution.leetcode;
 
+import java.util.List;
+
 /**
  * @author jing1560
  * @data 2024/5/9
@@ -26,5 +28,11 @@ public class SpiralOrder {
 
     public static void main(String[] args){
 
+    }
+
+    public List<Integer> spiralOrder(int[][] matrix) {
+
+
+        return null;
     }
 }
