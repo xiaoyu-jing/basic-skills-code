@@ -45,4 +45,5 @@ public class StringJoinTestCase {
         String joinStr = String.join("", codeArr);
         System.out.println("Java8 拼接：" + joinStr);
     }
+
 }
