@@ -35,6 +35,8 @@ public class SearchMatrix {
     public static void main(String[] args){
         int[][] matrix = {{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
         System.out.println("是否存在 5 ： " + searchMatrixSolution1(matrix, 5));
+
+        System.out.println("是否存在 5 ： " + searchMatrixSolution2(matrix, 5));
     }
 
     /**
@@ -56,12 +58,12 @@ public class SearchMatrix {
     /**
        解法二：二维数组的二分查找法
      */
-    public boolean searchMatrixSolution2(int[][] matrix, int target){
+    public static boolean searchMatrixSolution2(int[][] matrix, int target){
         int[] columnMatrix = binarySearchByColumn(matrix, target);
         return binarySearchByRow(columnMatrix,target);
     }
 
-    public int[] binarySearchByColumn(int[][] matrix, int target){
+    public static int[] binarySearchByColumn(int[][] matrix, int target){
         int left = 0, right = matrix[0].length - 1;
         while(left < right){
             int mid = (right - left) / 2 + left;
@@ -81,7 +83,7 @@ public class SearchMatrix {
         return matrix_column;
     }
 
-    public boolean binarySearchByRow(int[] columnMatrix, int target){
+    public static boolean binarySearchByRow(int[] columnMatrix, int target){
         int left = 0, right = columnMatrix.length - 1;
         while(left <= right){
             int mid = (right - left) / 2 + left;
