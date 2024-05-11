@@ -39,7 +39,7 @@ public class SearchMatrix {
         System.out.println("是否存在 5 ： " + searchMatrixSolution2(matrix, 5));
 
         int[][] matrix1 = {{1,4},{2,5}};
-        System.out.println("是否存在 2 ： " + searchMatrixSolution2(matrix1, 5));
+        System.out.println("是否存在 2 ： " + searchMatrixSolution2(matrix1, 2));
     }
 
     /**
