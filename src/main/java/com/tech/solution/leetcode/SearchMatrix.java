@@ -1,5 +1,8 @@
 package com.tech.solution.leetcode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author jing1560
  * @data 2024/5/11
@@ -28,4 +31,25 @@ package com.tech.solution.leetcode;
  * -10^9 <= target <= 10^9
  */
 public class SearchMatrix {
+
+    public static void main(String[] args){
+        int[][] matrix = {{1,4,7,11,15},{2,5,8,12,19},{3,6,9,16,22},{10,13,14,17,24},{18,21,23,26,30}};
+        System.out.println("是否存在 5 ： " + searchMatrixSolution1(matrix, 5));
+    }
+
+    /**
+       解法一：暴力解法
+     */
+    public static boolean searchMatrixSolution1(int[][] matrix, int target){
+        List<Integer> list = new ArrayList<>();
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[i].length; j++){
+                list.add(matrix[i][j]);
+            }
+        }
+        if(list.contains(target)){
+            return true;
+        }
+        return false;
+    }
 }
