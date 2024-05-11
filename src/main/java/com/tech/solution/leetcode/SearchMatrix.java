@@ -52,4 +52,47 @@ public class SearchMatrix {
         }
         return false;
     }
+
+    /**
+       解法二：二维数组的二分查找法
+     */
+    public boolean searchMatrixSolution2(int[][] matrix, int target){
+        int[] columnMatrix = binarySearchByColumn(matrix, target);
+        return binarySearchByRow(columnMatrix,target);
+    }
+
+    public int[] binarySearchByColumn(int[][] matrix, int target){
+        int left = 0, right = matrix[0].length - 1;
+        while(left < right){
+            int mid = (right - left) / 2 + left;
+            if(matrix[0][mid] < target){
+                left = mid + 1;
+            } else if(matrix[0][mid] > target){
+                right = mid - 1;
+            } else {
+                left = mid;
+                break;
+            }
+        }
+        int[] matrix_column = new int[matrix.length];
+        for(int i = 0; i < matrix.length; i++){
+            matrix_column[i] = matrix[i][left];
+        }
+        return matrix_column;
+    }
+
+    public boolean binarySearchByRow(int[] columnMatrix, int target){
+        int left = 0, right = columnMatrix.length - 1;
+        while(left <= right){
+            int mid = (right - left) / 2 + left;
+            if(columnMatrix[mid] < target){
+                left = mid + 1;
+            } else if(columnMatrix[mid] > target){
+                right = mid - 1;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 }
