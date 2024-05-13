@@ -37,9 +37,13 @@ public class SearchMatrix {
         System.out.println("是否存在 5 ： " + searchMatrixSolution1(matrix, 5));
 
         System.out.println("是否存在 5 ： " + searchMatrixSolution2(matrix, 5));
+        System.out.println("是否存在 5 ： " + searchMatrixSolution3(matrix, 5));
 
         int[][] matrix1 = {{1,4},{2,5}};
-        System.out.println("是否存在 2 ： " + searchMatrixSolution2(matrix1, 2));
+        System.out.println("是否存在 2 ： " + searchMatrixSolution2(matrix1, 2)); // 该case不正确
+
+        int[][] matrix3 = {{1,4},{2,5}};
+        System.out.println("是否存在 2 ： " + searchMatrixSolution3(matrix3, 2)); // 该case正确
     }
 
     /**
@@ -114,5 +118,37 @@ public class SearchMatrix {
             }
         }
         return false;
+    }
+
+    /**
+     * 解法三：官方解法 - 二维数组的二分查找法
+     *         思路：一行一行的遍历，每一行都使用二分查找法
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public static boolean searchMatrixSolution3(int[][] matrix, int target){
+        for(int[] row : matrix){
+            int index = searchDataByRow(row, target);
+            if(index >= 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static int searchDataByRow(int[] row, int target){
+        int left = 0, right = row.length - 1;
+        while (left <= right){
+            int mid = (right - left) / 2 + left;
+            if(row[mid] < target){
+                left = mid + 1;
+            }else if(row[mid] > target){
+                right = mid - 1;
+            }else {
+                return mid;
+            }
+        }
+        return -1;
     }
 }
