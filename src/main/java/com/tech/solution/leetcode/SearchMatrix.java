@@ -59,6 +59,20 @@ public class SearchMatrix {
     }
 
     /**
+        解法一：暴力解法(官方)
+     */
+    public static boolean searchMatrixSolution11(int[][] matrix, int target){
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[i].length; j++){
+                if(matrix[i][j] == target){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
        解法二：二维数组的二分查找法
      */
     public static boolean searchMatrixSolution2(int[][] matrix, int target){
