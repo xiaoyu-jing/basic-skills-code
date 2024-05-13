@@ -73,7 +73,8 @@ public class SearchMatrix {
     }
 
     /**
-       解法二：二维数组的二分查找法
+       解法二：二维数组的二分查找法 (存在部分通不过的用例)
+       思路：先 从第一行 开始找最接近目标值的列，然后从 指定列上寻找目标值
      */
     public static boolean searchMatrixSolution2(int[][] matrix, int target){
         int[] columnMatrix = binarySearchByColumn(matrix, target);
