@@ -1,7 +1,11 @@
 package com.tech.solution.leetcode;
 
+import sun.java2d.loops.TransformHelper;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author jing1560
@@ -27,7 +31,7 @@ import java.util.List;
  */
 public class FlattenTree {
 
-    public class TreeNode {
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -41,8 +45,11 @@ public class FlattenTree {
     }
 
     public static void main(String[] args){
-        flatten(null);
-        System.out.println();
+        int[] preOrder = {1,2,3,4,5,6};
+        int[] inOrder = {3,2,4,1,5,6};
+        TreeNode root = buildNode(preOrder, inOrder);
+        flatten(root);
+        System.out.println(root);
     }
 
     private static void flatten(TreeNode root) {
@@ -66,4 +73,36 @@ public class FlattenTree {
             preOrderBuilder(root.right, list);
         }
     }
+
+    /********************* 数据构造 ******************************/
+
+    private static TreeNode buildNode(int[] preOrder, int[] inOrder){
+        if(preOrder == null || inOrder == null || preOrder.length != inOrder.length){
+            return null;
+        }
+        // 中序遍历作为标准，放在Map中
+        Map<Integer, Integer> inMap = new HashMap<>();
+        for(int i = 0; i < inOrder.length; i++){
+            inMap.put(inOrder[i], i);
+        }
+        TreeNode root = buildTree(inMap, 0, preOrder.length - 1, preOrder);
+        return root;
+    }
+
+    public static int rootIndex = 0;
+
+    private static TreeNode buildTree(Map<Integer,Integer> inMap, int left, int right, int[] preOrder){
+        if(left <= right){
+            int rootValue = preOrder[rootIndex];
+            TreeNode root = new TreeNode(rootValue);
+            // rootIndex为根节点计数器，由于是先序遍历，所以每次+1，表示取到的就是根节点
+            rootIndex++;
+            root.left = buildTree(inMap, left,  inMap.get(rootValue) - 1, preOrder);
+            root.right = buildTree(inMap, inMap.get(rootValue) + 1, right, preOrder);
+            return root;
+        } else {
+            return null;
+        }
+    }
+
 }
