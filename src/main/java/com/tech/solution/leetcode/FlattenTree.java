@@ -1,5 +1,8 @@
 package com.tech.solution.leetcode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author jing1560
  * @data 2024/5/15
@@ -23,4 +26,44 @@ package com.tech.solution.leetcode;
  * 输出：[0]
  */
 public class FlattenTree {
+
+    public class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+        TreeNode() {}
+        TreeNode(int val) { this.val = val; }
+        TreeNode(int val, TreeNode left, TreeNode right) {
+            this.val = val;
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+    public static void main(String[] args){
+        flatten(null);
+        System.out.println();
+    }
+
+    private static void flatten(TreeNode root) {
+        List<TreeNode> list = new ArrayList<>();
+        preOrderBuilder(root, list);
+        //链表组装
+        for(int i = 1; i < list.size(); i++){
+            TreeNode prev = list.get(i - 1);
+            TreeNode currentNode = list.get(i);
+            prev.left = null;
+            prev.right = currentNode;
+        }
+    }
+
+    private static void preOrderBuilder(TreeNode root, List<TreeNode> list){
+        if(root != null){
+            list.add(root);
+            //左子树数据获取
+            preOrderBuilder(root.left, list);
+            //右子树数据获取
+            preOrderBuilder(root.right, list);
+        }
+    }
 }
