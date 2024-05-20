@@ -49,6 +49,11 @@ public class LevelOrder {
         System.out.println(levelOrder(node));
     }
 
+    /**
+     * 解法一：节点层数记录
+     * @param root
+     * @return
+     */
     public static List<List<Integer>> levelOrder(TreeNode root) {
         if(root == null){
             return new ArrayList<>();
