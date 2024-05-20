@@ -106,4 +106,5 @@ public class CoinChange {
         // 是否是初始化的值 （amount + 1），如果是初始值说明没有兑换成功
         return (dp[amount] == amount + 1) ? -1 : dp[amount];
     }
+
 }
