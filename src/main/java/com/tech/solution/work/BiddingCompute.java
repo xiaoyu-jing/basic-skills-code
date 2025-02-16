@@ -7,6 +7,7 @@ import static java.lang.Math.abs;
 /**
  * @author jing1560
  * @data 2023/10/10
+ * @discription 呼分的投标计算
  */
 public class BiddingCompute {
 
